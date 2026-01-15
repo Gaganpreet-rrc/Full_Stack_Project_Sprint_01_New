@@ -44,7 +44,7 @@ function SearchFilter() {
   return (
     <section className="search-filter">
       <header className="search-header">
-        <h2>📚 Library Explorer</h2>
+        <h2>Library Explorer</h2>
         <p>Search, filter, and sort books easily</p>
       </header>
 
