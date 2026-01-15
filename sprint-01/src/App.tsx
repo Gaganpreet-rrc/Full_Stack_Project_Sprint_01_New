@@ -8,9 +8,6 @@ function App() {
 
   return (
     <>
-    <header>
-        <h1>Library Management App</h1>
-      </header>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -31,9 +28,6 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <footer>
-        <p>Gaganpreet Kaur, Harmanpreet Kaur, Manjot Kaur, Parneet Kaur</p>
-      </footer>
     </>
   )
 }
