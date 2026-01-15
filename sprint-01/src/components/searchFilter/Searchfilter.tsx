@@ -10,7 +10,7 @@ function SearchFilter() {
         <p>Search, filter, and sort books easily</p>
       </header>
 
-      {/* Search and Filter Controls */}
+      {/* Search and Filter*/}
       <form className="filter-panel">
         <input
           type="text"
