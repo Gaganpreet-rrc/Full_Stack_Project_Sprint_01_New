@@ -4,7 +4,6 @@ import "./Searchfilter.css";
 function SearchFilter() {
   return (
     <section className="search-filter">
-      {/* Component Header */}
       <header className="search-header">
         <h2>Library Explorer</h2>
         <p>Search, filter, and sort books easily</p>
