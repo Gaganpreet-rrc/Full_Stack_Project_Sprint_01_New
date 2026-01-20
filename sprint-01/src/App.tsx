@@ -1,5 +1,5 @@
 import './App.css'
-import LibraryTips from "./Components/LibraryTips/LibraryTips";
+import LibraryTips from "./components/LibraryTips/LibraryTips";
 
 function App() {
 

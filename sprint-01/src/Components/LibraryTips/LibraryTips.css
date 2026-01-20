@@ -12,7 +12,7 @@
 
 /* Title inside the white box */
 .library-tips-title {
-  color: #000000;          /* 🔴 make text BLACK, not white */
+  color: #000000;      
   font-size: 22px;
   margin-bottom: 12px;
   text-align: center;
