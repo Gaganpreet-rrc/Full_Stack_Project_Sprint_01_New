@@ -6,7 +6,7 @@ export default function LibraryTips() {
     { id: 2, text: "Read at least 15 minutes every day to build a habit." },
     { id: 3, text: "Return borrowed books on time to avoid late fees." },
     { id: 4, text: "Check the table of contents first to understand the book quickly." },
-    { id: 5, text: "Use headphones when watching videos or doing digital work in the library." }
+    { id: 5, text: "Use headphones when watching videos or doing digital work in library." }
   ];
 
   return (
