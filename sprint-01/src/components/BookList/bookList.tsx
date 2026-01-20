@@ -1,15 +1,22 @@
-import "./bookList.css"
+import "./bookList.css";
+
 function BookList() {
+  const books = [
+    "The Marrow Thieves",
+    "Good Habits",
+    "Harry Potter",
+    "Rich Dad Poor Dad",
+    "Cinderella",
+  ];
+
   return (
     <section className="book-list">
-      <h2>Available Books in Library:</h2>
+      <h2>Available Books in Library</h2>
 
       <ul>
-        <li>The Marrow Thieves</li>
-        <li>Good Habits</li>
-        <li>Harry Potter</li>
-        <li>Rich Dad Poor Dad</li>
-        <li>Cindrella</li>
+        {books.map((book, index) => (
+          <li key={index}>{book}</li>
+        ))}
       </ul>
     </section>
   );
