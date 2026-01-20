@@ -1,6 +1,6 @@
 import './App.css';
 import SearchFilter from './components/SearchFilter/SearchFilter';
-import LibraryTips from './components/LibraryTips/LibraryTips';
+import LibraryTips from './Components/LibraryTips/LibraryTips';
 import BookList from './components/BookList/bookList';
 
 function App() {
