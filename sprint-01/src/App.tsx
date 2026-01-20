@@ -1,4 +1,6 @@
 import './App.css'
+import LibraryTips from "./components/LibraryTips/LibraryTips";
+
 import BookList from './components/BookList/bookList'
 import LibraryTips from "./Components/LibraryTips/LibraryTips";
 function App() {
