@@ -1,3 +1,5 @@
+import React from "react";
+import Login from "./components/login/login";
 import './App.css';
 import SearchFilter from './components/searchFilter/Searchfilter';
 import LibraryTips from './Components/LibraryTips/LibraryTips';
@@ -13,6 +15,7 @@ function App() {
       <SearchFilter />
       <BookList />
       <LibraryTips />
+      <Login />
 
       <footer>
         <p>
@@ -22,5 +25,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
