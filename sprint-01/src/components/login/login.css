@@ -1,0 +1,18 @@
+.login {
+  width: 250px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.login input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+}
+
+.login button {
+  width: 100%;
+  padding: 6px;
+}
