@@ -1,4 +1,3 @@
-import React from "react";
 import Login from "./components/login/login";
 import './App.css';
 import SearchFilter from './components/searchFilter/Searchfilter';
@@ -12,10 +11,11 @@ function App() {
         <h1>Library Management App</h1>
       </header>
 
+      <Login />
       <SearchFilter />
       <BookList />
       <LibraryTips />
-      <Login />
+      
 
       <footer>
         <p>
