@@ -1,4 +1,4 @@
-import "./Searchfilter.css";
+import "./SearchFilter.css";
 
 /* Search & Filter Component */
 function SearchFilter() {
