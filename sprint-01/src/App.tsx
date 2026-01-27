@@ -1,28 +1,21 @@
-import Login from "./components/login/login";
 import './App.css';
-import SearchFilter from './components/searchFilter/Searchfilter';
-import LibraryTips from './Components/LibraryTips/LibraryTips';
-import BookList from './components/BookList/bookList';
+import BookList from './Components/BookList/bookList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './Components/pages/Home';
+import { Layout } from './Components/common/layout/layout';
 
 function App() {
   return (
-    <div className="app">
-      <header>
-        <h1>Library Management App</h1>
-      </header>
-
-      <Login />
-      <SearchFilter />
-      <BookList />
-      <LibraryTips />
-      
-
-      <footer>
-        <p>
-          Gaganpreet Kaur, Harmanpreet Kaur, Manjot Kaur, Parneet Kaur
-        </p>
-      </footer>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="booklist" element={<BookList />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+
 export default App;
