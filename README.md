@@ -11,7 +11,9 @@
 This project is a Library Management Application. It allows users to explore books, track borrowed books, and interact with other users through book recommendations and reviews.
 
 ### User Stories
-- As a user, I want to log in to keep my books are saved for future use.
-- As a user, I want to create and manage personal book lists so that I can organize the books I want to read.
-- As a user, I want to view and share book reviews so that I can interact with other readers and get recommendations.
-- As a user, I want to get updates about books which are popular among the world.
+
+- As a user, I want to view and manage a library book list so that I can keep track of available and saved books.
+- As a user, I want to search and filter books by title, author, or category so that I can quickly find books I’m interested in.
+- As a user, I want to log in so that my book list and preferences are saved for future use.
+- As a user, I want to view library tips and recommendations so that I can make better reading choices and use library resources effectively.
+
