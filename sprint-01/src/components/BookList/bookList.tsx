@@ -2,38 +2,34 @@ import React, { useState } from "react";
 import SearchFilter from "../searchFilter/Searchfilter";
 import "./bookList.css";
 
+type Book = {
+  id: number;
+  title: string;
+};
+
 type BookListProps = {
+  books: Book[];
+  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const BookList = ({ search, setSearch }: BookListProps) => {
-  const [books, setBooks] = useState([
-    "The Marrow Thieves",
-    "Good Habits",
-    "Harry Potter",
-    "Rich Dad Poor Dad",
-    "Cinderella",
-  ]);
-
+const BookList = ({ books, setBooks, search, setSearch }: BookListProps) => {
   const [newBook, setNewBook] = useState("");
 
-  // Filter books based on search
   const filteredBooks = books.filter((book) =>
-    book.toLowerCase().includes(search.toLowerCase())
+    book.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Add new book
   const addBook = () => {
     if (newBook.trim() !== "") {
-      setBooks([...books, newBook.trim()]);
+      setBooks([...books, { id: Date.now(), title: newBook.trim() }]);
       setNewBook("");
     }
   };
 
-  // Remove book
-  const removeBook = (bookToRemove: string) => {
-    setBooks(books.filter((book) => book !== bookToRemove));
+  const removeBook = (id: number) => {
+    setBooks(books.filter((book) => book.id !== id));
   };
 
   return (
@@ -53,10 +49,10 @@ const BookList = ({ search, setSearch }: BookListProps) => {
       </div>
 
       <div className="books">
-        {filteredBooks.map((book, index) => (
-          <div key={index} className="book-item">
-            {book}{" "}
-            <button onClick={() => removeBook(book)}>Remove</button>
+        {filteredBooks.map((book) => (
+          <div key={book.id} className="book-item">
+            {book.title}
+            <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
       </div>
