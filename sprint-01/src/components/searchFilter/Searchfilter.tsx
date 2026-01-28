@@ -1,41 +1,19 @@
-import "./SearchFilter.css";
+import React from "react";
 
-/* Search & Filter Component */
-function SearchFilter() {
+type SearchFilterProps = {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const SearchFilter = ({ search, setSearch }: SearchFilterProps) => {
   return (
-    <section className="search-filter">
-      <header className="search-header">
-        <h2>Library Explorer</h2>
-        <p>Search, filter, and sort books easily</p>
-      </header>
-
-      {/* Search and Filter*/}
-      <form className="filter-panel">
-        <input
-          type="text"
-          placeholder="Search by title, author, or ISBN"
-          aria-label="Search books"
-        />
-
-        <select aria-label="Filter by category">
-          <option value="">All Categories</option>
-          <option value="Programming">Programming</option>
-          <option value="Self-Help">Self-Help</option>
-        </select>
-
-        <select aria-label="Filter by availability">
-          <option value="">All Availability</option>
-          <option value="available">Available</option>
-          <option value="unavailable">Checked Out</option>
-        </select>
-
-        <select aria-label="Sort books">
-          <option value="title">Sort by Title</option>
-          <option value="year">Sort by Year</option>
-        </select>
-      </form>
-    </section>
+    <input
+      type="text"
+      placeholder="Search books..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
   );
-}
+};
 
 export default SearchFilter;
