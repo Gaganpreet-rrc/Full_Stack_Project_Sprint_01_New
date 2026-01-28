@@ -1,7 +1,5 @@
-const Home = () => (
-  <div>
-    <h2>Welcome to the Library App!</h2>
-  </div>
-);
+function Home() {
+  return <h2>Welcome to the Library</h2>;
+}
 
 export default Home;
