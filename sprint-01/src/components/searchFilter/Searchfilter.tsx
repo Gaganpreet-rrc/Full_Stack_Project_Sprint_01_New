@@ -1,34 +1,22 @@
-import React from "react";
-
-import "./SearchFilter.css";
- 
-type SearchFilterProps = {
-
+export default function SearchFilter({
+  search,
+  setSearch,
+}: {
   search: string;
-
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-
-};
- 
-const SearchFilter = ({ search, setSearch }: SearchFilterProps) => {
-
+}) {
   return (
-<input
-
-      type="text"
-
-      placeholder="Search books..."
-
-      value={search}
-
-      onChange={(e) => setSearch(e.target.value)}
-
-    />
-
+    <form
+      className="search-form"
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <input
+        type="text"
+        placeholder="Enter a word, phrase, or acronym..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <input type="submit" value="Search" />
+    </form>
   );
-
-};
- 
-export default SearchFilter;
-
- 
+}

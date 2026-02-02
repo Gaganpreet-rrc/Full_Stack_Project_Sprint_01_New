@@ -1,4 +1,4 @@
-import SearchFilter from "./SearchFilter/SearchFilter";
+import SearchFilter from "./SearchFilter/searchfilter";
 
 export const SearchFilterPage = () => {
   return <SearchFilter />;
