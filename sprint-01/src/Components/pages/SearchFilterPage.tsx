@@ -1,5 +1,10 @@
-import SearchFilter from "../SearchFilter/SearchFilter";
+import SearchFilter from "../searchFilter/Searchfilter";
 
-export default function SearchFilterPage() {
-  return <SearchFilter />;
+type SearchFilterPageProps = {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function SearchFilterPage({ search, setSearch }: SearchFilterPageProps) {
+  return <SearchFilter search={search} setSearch={setSearch} />;
 }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SearchFilter from "../searchFilter/Searchfilter";
 import "./bookList.css";
 
 type Book = {
@@ -8,27 +7,24 @@ type Book = {
 };
 
 type BookListProps = {
+  // Receives state and setter methods as props
   books: Book[];
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const BookList = ({ books, setBooks, search, setSearch }: BookListProps) => {
+const BookList = ({ books, setBooks }: BookListProps) => {
   const [newBook, setNewBook] = useState("");
-
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(search.toLowerCase())
-  );
 
   const addBook = () => {
     if (newBook.trim() !== "") {
+      // Adding items
       setBooks([...books, { id: Date.now(), title: newBook.trim() }]);
       setNewBook("");
     }
   };
 
   const removeBook = (id: number) => {
+    //  Removing items
     setBooks(books.filter((book) => book.id !== id));
   };
 
@@ -36,9 +32,8 @@ const BookList = ({ books, setBooks, search, setSearch }: BookListProps) => {
     <section className="book-list">
       <h2>Available Books in Library</h2>
 
-      <SearchFilter search={search} setSearch={setSearch} />
-
       <div className="add-book">
+        {/* This is user input */}
         <input
           type="text"
           placeholder="Add a new book..."
@@ -49,7 +44,8 @@ const BookList = ({ books, setBooks, search, setSearch }: BookListProps) => {
       </div>
 
       <div className="books">
-        {filteredBooks.map((book) => (
+        {/* Rendering using map() */}
+        {books.map((book) => (
           <div key={book.id} className="book-item">
             {book.title}
             <button onClick={() => removeBook(book.id)}>Remove</button>
