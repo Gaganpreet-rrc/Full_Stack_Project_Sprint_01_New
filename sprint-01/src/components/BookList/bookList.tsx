@@ -1,48 +1,39 @@
 import React, { useState } from "react";
-import SearchFilter from "../searchFilter/Searchfilter";
 import "./bookList.css";
 
-type BookListProps = {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+type Book = {
+  id: number;
+  title: string;
 };
 
-const BookList = ({ search, setSearch }: BookListProps) => {
-  const [books, setBooks] = useState([
-    "The Marrow Thieves",
-    "Good Habits",
-    "Harry Potter",
-    "Rich Dad Poor Dad",
-    "Cinderella",
-  ]);
+type BookListProps = {
+  // Receives state and setter methods as props
+  books: Book[];
+  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
+};
 
+const BookList = ({ books, setBooks }: BookListProps) => {
   const [newBook, setNewBook] = useState("");
 
-  // Filter books based on search
-  const filteredBooks = books.filter((book) =>
-    book.toLowerCase().includes(search.toLowerCase())
-  );
-
-  // Add new book
   const addBook = () => {
     if (newBook.trim() !== "") {
-      setBooks([...books, newBook.trim()]);
+      // Adding items
+      setBooks([...books, { id: Date.now(), title: newBook.trim() }]);
       setNewBook("");
     }
   };
 
-  // Remove book
-  const removeBook = (bookToRemove: string) => {
-    setBooks(books.filter((book) => book !== bookToRemove));
+  const removeBook = (id: number) => {
+    //  Removing items
+    setBooks(books.filter((book) => book.id !== id));
   };
 
   return (
     <section className="book-list">
       <h2>Available Books in Library</h2>
 
-      <SearchFilter search={search} setSearch={setSearch} />
-
       <div className="add-book">
+        {/* This is user input */}
         <input
           type="text"
           placeholder="Add a new book..."
@@ -53,10 +44,11 @@ const BookList = ({ search, setSearch }: BookListProps) => {
       </div>
 
       <div className="books">
-        {filteredBooks.map((book, index) => (
-          <div key={index} className="book-item">
-            {book}{" "}
-            <button onClick={() => removeBook(book)}>Remove</button>
+        {/* Rendering using map() */}
+        {books.map((book) => (
+          <div key={book.id} className="book-item">
+            {book.title}
+            <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
       </div>

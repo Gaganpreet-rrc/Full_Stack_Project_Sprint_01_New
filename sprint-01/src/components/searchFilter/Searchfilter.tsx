@@ -1,141 +1,80 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-type SearchFilterProps = {
+export default function SearchFilter({
+  search,
+  setSearch,
+}: {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-};
+}) {
+  const navigate = useNavigate();
+  const [history, setHistory] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState(search);
 
-const SearchFilter = ({ search, setSearch }: SearchFilterProps) => {
-  return (
-    <input
-      type="text"
-      placeholder="Search books..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-import { useState } from "react";
-import "./SearchFilter.css";
+  useEffect(() => {
+    const savedHistory = localStorage.getItem("searchHistory");
+    if (savedHistory) setHistory(JSON.parse(savedHistory));
+  }, []);
 
-const booksData = [
-  { id: 1, title: "JavaScript Basics", category: "Programming", year: 2020, available: true },
-  { id: 2, title: "React Advanced", category: "Programming", year: 2022, available: false },
-  { id: 3, title: "The Power of Habit", category: "Self-Help", year: 2018, available: true },
-  { id: 4, title: "Atomic Habits", category: "Self-Help", year: 2021, available: false },
-];
+  useEffect(() => {
+    localStorage.setItem("searchHistory", JSON.stringify(history));
+  }, [history]);
 
-function SearchFilter() {
-  const [books, setBooks] = useState(booksData);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState("");
-  const [availability, setAvailability] = useState("");
-  const [sortOption, setSortOption] = useState("title");
-
-  const [newTitle, setNewTitle] = useState("");
-  const [newCategory, setNewCategory] = useState("Programming");
-  const [newYear, setNewYear] = useState("");
-  const [newAvailable, setNewAvailable] = useState(true);
-
-  const filteredBooks = books
-    .filter(book =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (category ? book.category === category : true) &&
-      (availability ? (availability === "available" ? book.available : !book.available) : true)
-    )
-    .sort((a, b) => {
-      if (sortOption === "title") return a.title.localeCompare(b.title);
-      if (sortOption === "year") return a.year - b.year;
-      return 0;
-    });
-
-    const handleAddBook = () => {
-    if (!newTitle || !newYear) return alert("Please enter title and year.");
-    const newBook = {
-      id: books.length + 1,
-      title: newTitle,
-      category: newCategory,
-      year: parseInt(newYear),
-      available: newAvailable,
-    };
-    setBooks([...books, newBook]);
-    setNewTitle("");
-    setNewYear("");
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
   };
 
-  /* Remove a book */
-  const handleRemoveBook = (id) => {
-    setBooks(books.filter(book => book.id !== id));
+  const handleSearch = () => {
+    if (inputValue && !history.includes(inputValue)) {
+      setHistory([...history, inputValue]); 
+    }
+    setSearch(inputValue); 
+    navigate("/booklist"); 
+  };
+
+  const handleRemove = (term: string) => {
+    setHistory(history.filter((item) => item !== term));
   };
 
   return (
-    <section className="search-filter">
-      <header className="search-header">
-        <h2>Library Explorer</h2>
-        <p>Search, filter, and sort books easily</p>
-      </header>
-
-      {/* Search and Filter*/}
-      <form className="filter-panel">
+    <div className="search-filter">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+        style={{ marginBottom: "10px" }}
+      >
         <input
           type="text"
-          placeholder="Search by title, author, or ISBN"
-          aria-label="Search books"
+          placeholder="Enter a word, phrase, or acronym..."
+          value={inputValue}
+          onChange={(e) => handleInputChange(e.target.value)}
+          className="filter-panel"
         />
-
-        <select aria-label="Filter by category">
-          <option value="">All Categories</option>
-          <option value="Programming">Programming</option>
-          <option value="Self-Help">Self-Help</option>
-        </select>
-
-        <select aria-label="Filter by availability">
-          <option value="">All Availability</option>
-          <option value="available">Available</option>
-          <option value="unavailable">Checked Out</option>
-        </select>
-
-        <select aria-label="Sort books">
-          <option value="title">Sort by Title</option>
-          <option value="year">Sort by Year</option>
-        </select>
+        <button type="submit" className="search-btn">
+          Search
+        </button>
       </form>
 
-      {/* Add new book */}
-      <div className="add-book">
-        <h3>Add a Book</h3>
-        <input
-          type="text"
-          placeholder="Title"
-          value={newTitle}
-          onChange={e => setNewTitle(e.target.value)}
-        />
-        <select value={newCategory} onChange={e => setNewCategory(e.target.value)}>
-          <option value="Programming">Programming</option>
-          <option value="Self-Help">Self-Help</option>
-        </select>
-        <input
-          type="number"
-          placeholder="Year"
-          value={newYear}
-          onChange={e => setNewYear(e.target.value)}
-        />
-        <select value={newAvailable} onChange={e => setNewAvailable(e.target.value === "true")}>
-          <option value="true">Available</option>
-          <option value="false">Checked Out</option>
-        </select>
-        <button type="button" onClick={handleAddBook}>Add Book</button>
-      </div>
-      
-      {/* Display filtered books */}
-      <ul className="book-list">
-        {filteredBooks.map(book => (
-          <li key={book.id}>
-            {book.title} ({book.category}) - {book.year} [{book.available ? "Available" : "Checked Out"}]
-            <button onClick={() => handleRemoveBook(book.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-    </section>
+      {history.length > 0 && (
+        <ul className="history-list">
+          {history.map((term, index) => (
+            <li key={index}>
+              {term}{" "}
+              <button
+                type="button"
+                onClick={() => handleRemove(term)}
+                className="remove-btn"
+              >
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
-};
+}
 
-export default SearchFilter;
