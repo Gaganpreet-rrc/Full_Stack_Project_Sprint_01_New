@@ -6,6 +6,8 @@ import { useState } from "react";
 import Home from "./components/pages/Home";
 import SearchFilterPage from "./components/pages/SearchFilterPage";
 import BookListPage from "./components/pages/BookListPage";
+import LibraryTipsPage from "./pages/LibraryTipsPage";
+
 
 function App() {
   const [books] = useState([
@@ -35,6 +37,7 @@ function App() {
               <BookListPage books={books} search={search} />
             }
           />
+          <Route path="/library-tips" element={<LibraryTipsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
