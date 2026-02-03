@@ -20,28 +20,19 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              <Home
-              />
-            }
-          />
+          <Route index element={<Home />} />
 
           <Route
             path="searchfilter"
             element={
-              <SearchFilterPage
-                search={search}
-                setSearch={setSearch}
-              />
+              <SearchFilterPage search={search} setSearch={setSearch} />
             }
           />
 
           <Route
             path="booklist"
             element={
-              <BookListPage books={books}/>
+              <BookListPage books={books} search={search} />
             }
           />
         </Route>

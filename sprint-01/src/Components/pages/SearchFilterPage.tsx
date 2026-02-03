@@ -1,7 +1,5 @@
-import SearchFilter from "./SearchFilter/searchfilter";
+import SearchFilter from "../SearchFilter/SearchFilter";
 
-export const SearchFilterPage = () => {
+export default function SearchFilterPage() {
   return <SearchFilter />;
 }
-
-export default SearchFilterPage;
