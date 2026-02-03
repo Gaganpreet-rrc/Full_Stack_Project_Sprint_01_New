@@ -9,6 +9,9 @@ export function Nav() {
         </NavLink>
         <NavLink to="/login">
           login
+
+        <NavLink to="/Searchfilter">
+          Searchfilter
         </NavLink>
         <NavLink to="/booklist">
           Book List
