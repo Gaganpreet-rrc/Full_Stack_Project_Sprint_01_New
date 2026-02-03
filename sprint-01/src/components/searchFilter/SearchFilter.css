@@ -1,0 +1,118 @@
+body{
+  background-color: #5ab6e3;
+}
+
+.search-filter {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #eef2ff;
+  border: 3px solid #060a11;
+  border-radius: 12px;
+}
+
+
+.search-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.search-header p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.filter-panel {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-panel input,
+.filter-panel select {
+  min-width: 220px;
+  padding: 0.7em 0.9em;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.filter-panel input:focus,
+.filter-panel select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.filter-panel input::placeholder {
+  color: #9ca3af;
+}
+
+@media (max-width: 600px) {
+  .filter-panel input,
+  .filter-panel select {
+    width: 100%;
+  }
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-panel input[type="text"] {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.7em 0.9em;
+  font-size: 1rem;
+  min-width: 220px;
+}
+
+.save-btn {
+  background-color: #10b981; 
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.save-btn:hover {
+  background-color: #059669;
+}
+
+.search-btn {
+  background-color: #3b82f6; 
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.search-btn:hover {
+  background-color: #2563eb;
+}
+
+.remove-btn {
+  background-color: #ef4444; 
+  border: none;
+  color: white;
+  padding: 0.3em 0.6em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.remove-btn:hover {
+  background-color: #b91c1c;
+}

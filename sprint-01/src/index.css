@@ -66,3 +66,59 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-panel input[type="text"] {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.7em 0.9em;
+  font-size: 1rem;
+  min-width: 220px;
+}
+
+.save-btn {
+  background-color: #10b981; 
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.save-btn:hover {
+  background-color: #059669;
+}
+
+.search-btn {
+  background-color: #3b82f6; 
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.search-btn:hover {
+  background-color: #2563eb;
+}
+
+.remove-btn {
+  background-color: #ef4444; 
+  border: none;
+  color: white;
+  padding: 0.3em 0.6em;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.remove-btn:hover {
+  background-color: #b91c1c;
+}

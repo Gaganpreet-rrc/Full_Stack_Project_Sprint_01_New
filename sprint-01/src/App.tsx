@@ -1,29 +1,45 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "./components/common/layout/Layout";
+import { useState } from "react";
 
-import BookList from "./Components/BookList/bookList";
+import Home from "./components/pages/Home";
+import SearchFilterPage from "./components/pages/SearchFilterPage";
+import BookListPage from "./components/pages/BookListPage";
 import LibraryTipsPage from "./pages/LibraryTipsPage";
 
+
 function App() {
+  const [books] = useState([
+    { id: 1, title: "The Marrow Thieves" },
+    { id: 2, title: "Good Habits" },
+    { id: 3, title: "Harry Potter" },
+  ]);
+
+  const [search, setSearch] = useState("");
+
   return (
     <BrowserRouter>
-      <header>
-        <h1>Library Management App</h1>
-
-        <nav>
-          <Link to="/" style={{ marginRight: "1rem" }}>Books</Link>
-          <Link to="/library-tips">Library Tips</Link>
-        </nav>
-      </header>
-
       <Routes>
-        <Route path="/" element={<BookList />} />
-        <Route path="/library-tips" element={<LibraryTipsPage />} />
-      </Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
 
-      <footer>
-        <p>Gaganpreet Kaur, Harmanpreet Kaur, Manjot Kaur, Parneet Kaur</p>
-      </footer>
+          <Route
+            path="searchfilter"
+            element={
+              <SearchFilterPage search={search} setSearch={setSearch} />
+            }
+          />
+
+          <Route
+            path="booklist"
+            element={
+              <BookListPage books={books} search={search} />
+            }
+          />
+          <Route path="/library-tips" element={<LibraryTipsPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
