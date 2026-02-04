@@ -1,4 +1,5 @@
-import SearchFilter from "../searchFilter/SearchFilter";
+import React from "react";
+import SearchFilter from "../../components/searchFilter/SearchFilter";
 
 type SearchFilterPageProps = {
   search: string;
