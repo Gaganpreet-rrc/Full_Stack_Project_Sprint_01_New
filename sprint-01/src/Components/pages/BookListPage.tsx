@@ -1,34 +1,25 @@
-type Book = {
-  id: number;
-  title: string;
+import React from "react";
+import BookList from "../BookList/bookList";
+
+type Book = { id: number; title: string };
+
+type BookListPageProps = {
+  books: Book[];
+  setBooks: React.Dispatch<React.SetStateAction<Book[]>>; // <-- add this
+  search: string;
 };
 
-export default function BookListPage({
-  books,
-  search,
-}: {
-  books: Book[];
-  search: string;
-}) {
-  const searchText = search.trim().toLowerCase();
-
+const BookListPage = ({ books, setBooks, search }: BookListPageProps) => {
   const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchText)
+    book.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div>
-      <h2>Book List</h2>
-
-      {filteredBooks.length === 0 ? (
-        <p>No books found</p>
-      ) : (
-        <ul>
-          {filteredBooks.map((book) => (
-            <li key={book.id}>{book.title}</li>
-          ))}
-        </ul>
-      )}
+      <h1>Library Books</h1>
+      <BookList books={filteredBooks} setBooks={setBooks} />
     </div>
   );
-}
+};
+
+export default BookListPage;

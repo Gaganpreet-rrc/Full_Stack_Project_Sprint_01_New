@@ -1,10 +1,16 @@
-import './App.css';
+import "./App.css";
 import { useState } from "react";
-import BookList from './components/BookList/bookList';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "./Components/common/layout/Layout";
+import { Home } from "./Components/pages/Home";
+import Login from "./Components/login/login";
+import BookListPage from "./Components/pages/BookListPage";
+import SearchFilterPage from "./Components/pages/SearchFilterPage";
+import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
 import Home from './components/pages/Home';
 import { Layout } from './components/common/layout/Layout';
 import Login from './components/login/login';
+
 
 function App() {
   // Shared state for books
@@ -17,48 +23,27 @@ const [users, setUsers] = useState<string[]>([]);
   // Shared state for search filter
   const [search, setSearch] = useState("");
 
+  // Shared state for users
+  const [users, setUsers] = useState<string[]>([]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* pass state to pages */}
-          <Route index element={<Home users={users} />} />
-
-          <Route
-            path="login"
-            element={<Login users={users} setUsers={setUsers} />}
-          />
-
-          <Route
-            path="booklist"
-            element={<BookList />}
-          />
-
           {/* Home page */}
-          <Route
-            index
-            element={<Home books={books} setBooks={setBooks} />}
-          />
+          <Route index element={<Home books={books} setBooks={setBooks} />} />
+
+          {/* Login page */}
+          <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
 
           {/* Book list page */}
-          <Route
-            path="booklist"
-            element={<BookListPage books={books} search={search} />}
-          />
+          <Route path="booklist" element={<BookListPage books={books} setBooks={setBooks} search={search} />} />
 
           {/* Search/filter page */}
-          <Route
-            path="searchfilter"
-            element={
-              <SearchFilterPage search={search} setSearch={setSearch} />
-            }
-          />
+          <Route path="searchfilter" element={<SearchFilterPage search={search} setSearch={setSearch} />} />
 
           {/* Library tips page */}
-          <Route
-            path="library-tips"
-            element={<LibraryTipsPage />}
-          />
+          <Route path="library-tips" element={<LibraryTipsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
