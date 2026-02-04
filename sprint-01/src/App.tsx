@@ -3,14 +3,10 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./Components/common/layout/Layout";
 import { Home } from "./Components/pages/Home";
-import Login from "./Components/login/login";
+import Login from "./Components/login/Login";
 import BookListPage from "./Components/pages/BookListPage";
 import SearchFilterPage from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
-import Home from './components/pages/Home';
-import { Layout } from './components/common/layout/Layout';
-import Login from './components/login/login';
-
 
 function App() {
   // Shared state for books
@@ -19,7 +15,7 @@ function App() {
     { id: 2, title: "Good Habits" },
     { id: 3, title: "Harry Potter" },
   ]);
-const [users, setUsers] = useState<string[]>([]);
+
   // Shared state for search filter
   const [search, setSearch] = useState("");
 
@@ -37,10 +33,16 @@ const [users, setUsers] = useState<string[]>([]);
           <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
 
           {/* Book list page */}
-          <Route path="booklist" element={<BookListPage books={books} setBooks={setBooks} search={search} />} />
+          <Route
+            path="booklist"
+            element={<BookListPage books={books} setBooks={setBooks} search={search} />}
+          />
 
           {/* Search/filter page */}
-          <Route path="searchfilter" element={<SearchFilterPage search={search} setSearch={setSearch} />} />
+          <Route
+            path="searchfilter"
+            element={<SearchFilterPage search={search} setSearch={setSearch} />}
+          />
 
           {/* Library tips page */}
           <Route path="library-tips" element={<LibraryTipsPage />} />
