@@ -1,10 +1,12 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "./Components/common/layout/Layout";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { Layout } from "./Components/common/layout/Layout";
 import { Home } from "./Components/pages/Home";
-import SearchFilterPage from "./Components/pages/SearchFilterPage";
+import Login from "./Components/login/login";
 import BookListPage from "./Components/pages/BookListPage";
+import SearchFilterPage from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
 
 function App() {
@@ -18,35 +20,27 @@ function App() {
   // Shared state for search filter
   const [search, setSearch] = useState("");
 
+  // Shared state for users
+  const [users, setUsers] = useState<string[]>([]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Home page */}
-          <Route
-            index
-            element={<Home books={books} setBooks={setBooks} />}
-          />
+          <Route index element={<Home books={books} setBooks={setBooks} />} />
+
+          {/* Login page */}
+          <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
 
           {/* Book list page */}
-          <Route
-            path="booklist"
-            element={<BookListPage books={books} search={search} />}
-          />
+          <Route path="booklist" element={<BookListPage books={books} search={search} />} />
 
           {/* Search/filter page */}
-          <Route
-            path="searchfilter"
-            element={
-              <SearchFilterPage search={search} setSearch={setSearch} />
-            }
-          />
+          <Route path="searchfilter" element={<SearchFilterPage search={search} setSearch={setSearch} />} />
 
           {/* Library tips page */}
-          <Route
-            path="library-tips"
-            element={<LibraryTipsPage />}
-          />
+          <Route path="library-tips" element={<LibraryTipsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
