@@ -1,4 +1,4 @@
-import SearchFilter from "../searchFilter/Searchfilter";
+import SearchFilter from "../searchFilter/SearchFilter";
 
 type SearchFilterPageProps = {
   search: string;
