@@ -9,6 +9,7 @@ export function Nav() {
         </NavLink>
         <NavLink to="/login">
           login
+          </NavLink>
 
         <NavLink to="/Searchfilter">
           Searchfilter

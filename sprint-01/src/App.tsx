@@ -34,7 +34,7 @@ function App() {
           <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
 
           {/* Book list page */}
-          <Route path="booklist" element={<BookListPage books={books} search={search} />} />
+          <Route path="booklist" element={<BookListPage books={books} setBooks={setBooks} search={search} />} />
 
           {/* Search/filter page */}
           <Route path="searchfilter" element={<SearchFilterPage search={search} setSearch={setSearch} />} />

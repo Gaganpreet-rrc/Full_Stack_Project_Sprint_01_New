@@ -1,18 +1,7 @@
-
-type HomeProps = {
-  users: string[];
-};
-
-const Home = ({ users }: HomeProps) => (
-  <div>
-    <h2>Welcome to the Library App!</h2>
-
-    <p>Total logged in users: {users.length}</p>
-  </div>
-);
 import { useState } from "react";
 
 type Book = { id: number; title: string };
+
 type HomeProps = {
   books: Book[];
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
@@ -22,7 +11,7 @@ export function Home({ books, setBooks }: HomeProps) {
   const [newBook, setNewBook] = useState("");
 
   return (
-    <>
+    <div>
       <h2>Welcome to the Library</h2>
       <p>Total books: {books.length}</p>
 
@@ -41,9 +30,9 @@ export function Home({ books, setBooks }: HomeProps) {
             }
           }}
         >
-          Add Book from Home
+          Add Book
         </button>
       </div>
-    </>
+    </div>
   );
 }
