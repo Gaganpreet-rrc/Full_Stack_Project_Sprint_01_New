@@ -1,5 +1,5 @@
 # Project Name
-## Team Name: Sunshine
+## Team Name: Library Management
 
 ### Team Members
 - Gaganpreet Kaur
