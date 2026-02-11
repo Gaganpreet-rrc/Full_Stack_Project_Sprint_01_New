@@ -1,5 +1,5 @@
 import React from "react";
-import BookList from "../../components/BookList/bookList";
+import BookList from "./../BookList/bookList";
 
 type Book = { id: number; title: string };
 
