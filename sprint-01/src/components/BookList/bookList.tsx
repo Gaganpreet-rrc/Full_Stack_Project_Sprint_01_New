@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./bookList.css";
 import { bookListRepo } from "../../repositories/bookListRepo";
-import type { Book } from "../../types/Book"; // <-- use the global Book type
+import type { Book } from "../../types/Book";
 
 type BookListProps = {
   books: Book[];
