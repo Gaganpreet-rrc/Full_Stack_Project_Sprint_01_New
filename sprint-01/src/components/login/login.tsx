@@ -33,7 +33,6 @@ const Login = () => {
       return;
     }
 
-    // Add user to logged-in list if not already there
     if (!loggedInUsers.includes(username)) {
       setLoggedInUsers([...loggedInUsers, username]);
     }

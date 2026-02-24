@@ -1,4 +1,4 @@
-import { LoginUser } from "../types/LoginUser";
+import type { LoginUser } from "../types/LoginUser";
 
 // Test data for login
 let testLoginUsers: LoginUser[] = [
@@ -23,7 +23,7 @@ export class LoginRepository {
     return user;
   }
 
-  // Update user information
+  // Update user
   update(id: number, updatedUser: Partial<LoginUser>): LoginUser | undefined {
     const user = testLoginUsers.find(u => u.id === id);
     if (user) {
@@ -35,7 +35,7 @@ export class LoginRepository {
 
   // Delete a user
   delete(id: number): boolean {
-    const beforeDeleteCount = testLoginUsers.length; // simple name
+    const beforeDeleteCount = testLoginUsers.length;
     testLoginUsers = testLoginUsers.filter(user => user.id !== id);
     return testLoginUsers.length < beforeDeleteCount;
   }
