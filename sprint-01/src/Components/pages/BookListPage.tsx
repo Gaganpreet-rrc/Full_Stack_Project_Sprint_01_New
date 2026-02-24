@@ -1,11 +1,10 @@
+import type { Book } from "../../types/Book";
 import React from "react";
-import BookList from "../../components/BookList/bookList";
-
-type Book = { id: number; title: string };
+import BookList from "../BookList/bookList";
 
 type BookListPageProps = {
   books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>; // <-- add this
+  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
   search: string;
 };
 

@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import "./bookList.css";
-
-type Book = {
-  id: number;
-  title: string;
-};
+import { bookListRepo } from "../../repositories/bookListRepo";
+import type { Book } from "../../types/Book";
 
 type BookListProps = {
-  // Receives state and setter methods as props
   books: Book[];
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
 };
@@ -17,15 +13,20 @@ const BookList = ({ books, setBooks }: BookListProps) => {
 
   const addBook = () => {
     if (newBook.trim() !== "") {
-      // Adding items
-      setBooks([...books, { id: Date.now(), title: newBook.trim() }]);
+      bookListRepo.add({
+        title: newBook.trim(),
+        author: "Unknown",   
+        available: true
+      });
+
+      setBooks(bookListRepo.getAll());
       setNewBook("");
     }
   };
 
   const removeBook = (id: number) => {
-    //  Removing items
-    setBooks(books.filter((book) => book.id !== id));
+    bookListRepo.remove(id);
+    setBooks(bookListRepo.getAll());
   };
 
   return (
@@ -33,7 +34,6 @@ const BookList = ({ books, setBooks }: BookListProps) => {
       <h2>Available Books in Library</h2>
 
       <div className="add-book">
-        {/* This is user input */}
         <input
           type="text"
           placeholder="Add a new book..."
@@ -44,7 +44,6 @@ const BookList = ({ books, setBooks }: BookListProps) => {
       </div>
 
       <div className="books">
-        {/* Rendering using map() */}
         {books.map((book) => (
           <div key={book.id} className="book-item">
             {book.title}

@@ -7,15 +7,12 @@ import Login from "./Components/login/login";
 import BookListPage from "./Components/pages/BookListPage";
 import SearchFilterPage from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
+import { bookListRepo } from "./repositories/bookListRepo";
+import type { Book } from "../src/types/Book"; 
 
 function App() {
   // Shared state for books
-  const [books, setBooks] = useState([
-    { id: 1, title: "The Marrow Thieves" },
-    { id: 2, title: "Good Habits" },
-    { id: 3, title: "Harry Potter" },
-  ]);
-
+const [books, setBooks] = useState<Book[]>(bookListRepo.getAll());
   // Shared state for search filter
   const [search, setSearch] = useState("");
 

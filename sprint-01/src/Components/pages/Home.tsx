@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-type Book = { id: number; title: string };
+import type { Book } from "./../../types/Book";
 
 type HomeProps = {
   books: Book[];
@@ -22,16 +21,24 @@ export function Home({ books, setBooks }: HomeProps) {
           value={newBook}
           onChange={(e) => setNewBook(e.target.value)}
         />
-        <button
-          onClick={() => {
-            if (newBook.trim() !== "") {
-              setBooks([...books, { id: Date.now(), title: newBook.trim() }]);
-              setNewBook("");
-            }
-          }}
-        >
-          Add Book
-        </button>
+<button
+  onClick={() => {
+    if (newBook.trim() !== "") {
+      setBooks([
+        ...books,
+        {
+          id: Date.now(),
+          title: newBook.trim(),
+          author: "Unknown",
+          available: true  
+        }
+      ]);
+      setNewBook("");
+    }
+  }}
+>
+  Add Book
+</button>
       </div>
     </div>
   );

@@ -29,3 +29,20 @@
 .book-list li:last-child {
   border-bottom: none;
 }
+
+.book-list button {
+  background-color: rgb(200, 79, 79);
+  color: white;
+  border: none;
+  padding: 4px 10px;  
+  margin-left: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem; 
+  transition: all 0.2s ease;
+}
+
+.book-list button:hover {
+  background-color: #45a049;
+}
