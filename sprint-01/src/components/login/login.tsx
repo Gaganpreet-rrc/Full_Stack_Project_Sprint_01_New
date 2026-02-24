@@ -1,4 +1,3 @@
-// src/components/Login.tsx
 import { useState } from "react";
 import { LoginRepository } from "../../repositories/LoginRepo";
 import "./login.css";
