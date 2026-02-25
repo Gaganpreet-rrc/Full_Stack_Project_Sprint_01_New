@@ -1,6 +1,7 @@
 import type { Book } from "../../types/Book";
 import React from "react";
 import BookList from "../BookList/bookList";
+import { searchService } from "../../services/searchfilterService";
 
 type BookListPageProps = {
   books: Book[];
@@ -9,9 +10,8 @@ type BookListPageProps = {
 };
 
 const BookListPage = ({ books, setBooks, search }: BookListPageProps) => {
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(search.toLowerCase())
-  );
+
+  const filteredBooks = searchService.filterBooks(books, search);
 
   return (
     <div>
