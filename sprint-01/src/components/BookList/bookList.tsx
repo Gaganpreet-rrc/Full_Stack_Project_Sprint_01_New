@@ -6,11 +6,10 @@ import type { Book } from "../../types/Book";
 type BookListProps = {
   books: Book[];
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
-  openModal: (book: Book) => void;
   isGridView: boolean;
 };
 
-const BookList = ({ books, setBooks, openModal, isGridView }: BookListProps) => {
+const BookList = ({ books, setBooks, isGridView }: BookListProps) => {
   const [newBook, setNewBook] = useState("");
 
   const addBook = () => {
@@ -47,7 +46,7 @@ const BookList = ({ books, setBooks, openModal, isGridView }: BookListProps) => 
     <div className={isGridView ? "grid-view books" : "list-view books"}>
   {books.map((book) => (
     <div key={book.id} className="book-item">
-      <span onClick={() => openModal(book)}>{book.title}</span>
+      <span>{book.title}</span>
       <button onClick={() => removeBook(book.id)}>Remove</button>
     </div>
   ))}

@@ -1,27 +1,20 @@
 import { useState } from "react";
-import type { Book } from "../types/Book";
 
+/**
+ * useLibrary Hook
+ * Handles layout presentation logic.
+ *
+ * Returns:
+ * isGridView - determines grid or list layout
+ * toggleView - switches layout
+ */
 export function useLibrary() {
   const [isGridView, setIsGridView] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const toggleView = () => setIsGridView(prev => !prev);
-  const openModal = (book: Book) => {
-    setSelectedBook(book);
-    setShowModal(true);
-  };
-  const closeModal = () => {
-    setSelectedBook(null);
-    setShowModal(false);
-  };
 
   return {
-    isGridView,
-    toggleView,
-    showModal,
-    openModal,
-    closeModal,
-    selectedBook,
+    isGridView,  // my current layout mode
+    toggleView, // switching the layout.
   };
 }
