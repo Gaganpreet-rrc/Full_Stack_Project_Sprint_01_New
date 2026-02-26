@@ -14,8 +14,9 @@ export const bookListRepo = {
 
   // GET ALL
   getAll() {
-    return bookList;
+    return [...bookList];
   },
+
 
   getById(id: number) {
     return bookList.find(book => book.id === id);
