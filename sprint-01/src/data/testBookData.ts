@@ -1,5 +1,4 @@
 import type { Book } from "../types/Book";
-
 // Book data
 export const testBookData: Book[] = [
   { id: 1, title: "The Marrow Thieves", author: "Cherie Dimaline", available: true },
