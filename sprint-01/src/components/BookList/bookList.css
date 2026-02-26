@@ -46,3 +46,21 @@
 .book-list button:hover {
   background-color: #45a049;
 }
+
+.books {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.list-view .book-item {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.grid-view .book-item {
+  width: 150px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import "../BookList/bookList.css";
 import type { Book } from "../../types/Book";
+import { useBooks } from "../../hooks/useBooks";
 
 type Props = {
-  books: Book[];
-  addBook: (title: string) => void;
-  removeBook: (id: number) => void;
+  isGridView: boolean;
 };
 
-export const BookList = ({ books, addBook, removeBook }: Props) => {
+export const BookList = ({ isGridView }: Props) => {
+  const { books, addBook, removeBook } = useBooks();
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
@@ -32,10 +32,10 @@ export const BookList = ({ books, addBook, removeBook }: Props) => {
         <button onClick={handleAdd}>Add</button>
       </div>
 
-      <div>
+      <div className={isGridView ? "grid-view books" : "list-view books"}>
         {books.map((book) => (
-          <div key={book.id}>
-            {book.title}{" "}
+          <div key={book.id} className="book-item">
+            <span>{book.title}</span>
             <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
