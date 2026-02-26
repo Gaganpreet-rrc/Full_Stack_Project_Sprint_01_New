@@ -1,5 +1,8 @@
 import { useState } from "react";
 import type { Book } from "./../../types/Book";
+import { useLibrary } from "../../hooks/useLibrary";
+import "./Home.css";
+
 
 type HomeProps = {
   books: Book[];
@@ -8,11 +11,16 @@ type HomeProps = {
 
 export function Home({ books, setBooks }: HomeProps) {
   const [newBook, setNewBook] = useState("");
+  const { isGridView, toggleView } = useLibrary();
 
-  return (
-    <div>
-      <h2>Welcome to the Library</h2>
-      <p>Total books: {books.length}</p>
+return (
+  <div className={isGridView ? "grid" : "list"}>
+    <h2>Welcome to the Library</h2>
+    <button onClick={toggleView}>
+      {isGridView ? "Switch to List View" : "Switch to Grid View"}
+    </button>
+
+    <p>Total books: {books.length}</p>
 
       <div>
         <input

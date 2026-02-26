@@ -6,19 +6,19 @@ import type { Book } from "../../types/Book";
 type BookListProps = {
   books: Book[];
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
+  isGridView: boolean;
 };
 
-const BookList = ({ books, setBooks }: BookListProps) => {
+const BookList = ({ books, setBooks, isGridView }: BookListProps) => {
   const [newBook, setNewBook] = useState("");
 
   const addBook = () => {
     if (newBook.trim() !== "") {
       bookListRepo.add({
         title: newBook.trim(),
-        author: "Unknown",   
-        available: true
+        author: "Unknown",
+        available: true,
       });
-
       setBooks(bookListRepo.getAll());
       setNewBook("");
     }
@@ -43,14 +43,14 @@ const BookList = ({ books, setBooks }: BookListProps) => {
         <button onClick={addBook}>Add Book</button>
       </div>
 
-      <div className="books">
-        {books.map((book) => (
-          <div key={book.id} className="book-item">
-            {book.title}
-            <button onClick={() => removeBook(book.id)}>Remove</button>
-          </div>
-        ))}
-      </div>
+    <div className={isGridView ? "grid-view books" : "list-view books"}>
+  {books.map((book) => (
+    <div key={book.id} className="book-item">
+      <span>{book.title}</span>
+      <button onClick={() => removeBook(book.id)}>Remove</button>
+    </div>
+  ))}
+</div>
     </section>
   );
 };
