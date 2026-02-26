@@ -1,58 +1,45 @@
-import React, { useState } from "react";
-import "./bookList.css";
-import { bookListRepo } from "../../repositories/bookListRepo";
+import { useState } from "react";
+import "../BookList/bookList.css";
 import type { Book } from "../../types/Book";
+import { useBooks } from "../../hooks/useBooks";
 
-type BookListProps = {
-  books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
+type Props = {
   isGridView: boolean;
 };
 
-const BookList = ({ books, setBooks, isGridView }: BookListProps) => {
+export const BookList = ({ isGridView }: Props) => {
+  const { books, addBook, removeBook } = useBooks();
   const [newBook, setNewBook] = useState("");
 
-  const addBook = () => {
+  const handleAdd = () => {
     if (newBook.trim() !== "") {
-      bookListRepo.add({
-        title: newBook.trim(),
-        author: "Unknown",
-        available: true,
-      });
-      setBooks(bookListRepo.getAll());
+      addBook(newBook.trim());
       setNewBook("");
     }
   };
 
-  const removeBook = (id: number) => {
-    bookListRepo.remove(id);
-    setBooks(bookListRepo.getAll());
-  };
-
   return (
     <section className="book-list">
-      <h2>Available Books in Library</h2>
+      <h2>Available Books</h2>
 
-      <div className="add-book">
+      <div>
         <input
           type="text"
           placeholder="Add a new book..."
           value={newBook}
           onChange={(e) => setNewBook(e.target.value)}
         />
-        <button onClick={addBook}>Add Book</button>
+        <button onClick={handleAdd}>Add</button>
       </div>
 
-    <div className={isGridView ? "grid-view books" : "list-view books"}>
-  {books.map((book) => (
-    <div key={book.id} className="book-item">
-      <span>{book.title}</span>
-      <button onClick={() => removeBook(book.id)}>Remove</button>
-    </div>
-  ))}
-</div>
+      <div className={isGridView ? "grid-view books" : "list-view books"}>
+        {books.map((book) => (
+          <div key={book.id} className="book-item">
+            <span>{book.title}</span>
+            <button onClick={() => removeBook(book.id)}>Remove</button>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
-
-export default BookList;
