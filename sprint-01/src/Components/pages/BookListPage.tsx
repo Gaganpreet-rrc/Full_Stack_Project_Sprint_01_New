@@ -1,24 +1,23 @@
-import type { Book } from "../../types/Book";
-import React from "react";
-import BookList from "../BookList/bookList";
+import { useLibraryContext } from "../../context/LibraryContext";
+import { BookList } from "../BookList/bookList";
 
-type BookListPageProps = {
-  books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
-  search: string;
-};
+type Props = { search: string };
 
-const BookListPage = ({ books, setBooks, search }: BookListPageProps) => {
-  const filteredBooks = books.filter((book) =>
+export default function BookListPage({ search }: Props) {
+  const { books, addBook, removeBook } = useLibraryContext();
+
+  const filteredBooks = books.filter(book =>
     book.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div>
       <h1>Library Books</h1>
-      <BookList books={filteredBooks} setBooks={setBooks} />
+      <BookList 
+        books={filteredBooks} 
+        addBook={addBook} 
+        removeBook={removeBook} 
+      />
     </div>
   );
-};
-
-export default BookListPage;
+}

@@ -7,44 +7,27 @@ import Login from "./Components/login/login";
 import BookListPage from "./Components/pages/BookListPage";
 import SearchFilterPage from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
-import { bookListRepo } from "./repositories/bookListRepo";
-import type { Book } from "../src/types/Book"; 
+import {LibraryProvider} from "./context/LibraryContext";
 
 function App() {
-  // Shared state for books
-const [books, setBooks] = useState<Book[]>(bookListRepo.getAll());
   // Shared state for search filter
   const [search, setSearch] = useState("");
-
   // Shared state for users
   const [users, setUsers] = useState<string[]>([]);
 
-  return (
+return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Home page */}
-          <Route index element={<Home books={books} setBooks={setBooks} />} />
-
-          {/* Login page */}
-          <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
-
-          {/* Book list page */}
-          <Route
-            path="booklist"
-            element={<BookListPage books={books} setBooks={setBooks} search={search} />}
-          />
-
-          {/* Search/filter page */}
-          <Route
-            path="searchfilter"
-            element={<SearchFilterPage search={search} setSearch={setSearch} />}
-          />
-
-          {/* Library tips page */}
-          <Route path="library-tips" element={<LibraryTipsPage />} />
-        </Route>
-      </Routes>
+      <LibraryProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="booklist" element={<BookListPage search={search} />} />
+            <Route path="searchfilter" element={<SearchFilterPage search={search} setSearch={setSearch} />} />
+            <Route path="library-tips" element={<LibraryTipsPage />} />
+            <Route path="login" element={<Login users={users} setUsers={setUsers} />} />
+          </Route>
+        </Routes>
+      </LibraryProvider>
     </BrowserRouter>
   );
 }

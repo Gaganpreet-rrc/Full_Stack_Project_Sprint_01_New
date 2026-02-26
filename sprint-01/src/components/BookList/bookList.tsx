@@ -1,52 +1,41 @@
-import React, { useState } from "react";
-import "./bookList.css";
-import { bookListRepo } from "../../repositories/bookListRepo";
+import { useState } from "react";
+import "../BookList/bookList.css";
 import type { Book } from "../../types/Book";
 
-type BookListProps = {
+type Props = {
   books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
+  addBook: (title: string) => void;
+  removeBook: (id: number) => void;
 };
 
-const BookList = ({ books, setBooks }: BookListProps) => {
+export const BookList = ({ books, addBook, removeBook }: Props) => {
   const [newBook, setNewBook] = useState("");
 
-  const addBook = () => {
+  const handleAdd = () => {
     if (newBook.trim() !== "") {
-      bookListRepo.add({
-        title: newBook.trim(),
-        author: "Unknown",   
-        available: true
-      });
-
-      setBooks(bookListRepo.getAll());
+      addBook(newBook.trim());
       setNewBook("");
     }
   };
 
-  const removeBook = (id: number) => {
-    bookListRepo.remove(id);
-    setBooks(bookListRepo.getAll());
-  };
-
   return (
     <section className="book-list">
-      <h2>Available Books in Library</h2>
+      <h2>Available Books</h2>
 
-      <div className="add-book">
+      <div>
         <input
           type="text"
           placeholder="Add a new book..."
           value={newBook}
           onChange={(e) => setNewBook(e.target.value)}
         />
-        <button onClick={addBook}>Add Book</button>
+        <button onClick={handleAdd}>Add</button>
       </div>
 
-      <div className="books">
+      <div>
         {books.map((book) => (
-          <div key={book.id} className="book-item">
-            {book.title}
+          <div key={book.id}>
+            {book.title}{" "}
             <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
@@ -54,5 +43,3 @@ const BookList = ({ books, setBooks }: BookListProps) => {
     </section>
   );
 };
-
-export default BookList;
