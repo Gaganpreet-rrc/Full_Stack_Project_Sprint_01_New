@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useLibraryContext } from "../../context/LibraryContext";
-import type { Book } from "./../../types/Book";
 import { useLibrary } from "../../hooks/useLibrary";
 import "./Home.css";
 

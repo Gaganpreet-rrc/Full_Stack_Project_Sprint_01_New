@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "../BookList/bookList.css";
-import type { Book } from "../../types/Book";
 import { useBooks } from "../../hooks/useBooks";
 
 type Props = {
   isGridView: boolean;
+  search: string;
 };
 
 export const BookList = ({ isGridView }: Props) => {
