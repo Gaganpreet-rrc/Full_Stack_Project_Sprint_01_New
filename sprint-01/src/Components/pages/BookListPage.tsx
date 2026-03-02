@@ -3,6 +3,7 @@ import { BookList } from "../BookList/bookList";
 import React from "react";
 import type { Book } from "../../types/Book";
 import BookList from "../BookList/bookList";
+import { searchService } from "../../services/searchfilterService";
 import { useLibrary } from "../../hooks/useLibrary";
 
 
@@ -13,6 +14,8 @@ export default function BookListPage({ search }: Props) {
 
   const filteredBooks = books.filter(book =>
 const BookListPage = ({ books, setBooks, search }: BookListPageProps) => {
+
+  const filteredBooks = searchService.filterBooks(books, search);
   const { isGridView, toggleView } = useLibrary();
 
   const filteredBooks = books.filter((book) =>
