@@ -1,11 +1,8 @@
-import React from "react";
+import { useLibraryContext } from "../../context/LibraryContext";
 import SearchFilter from "../../Components/searchFilter/Searchfilter";
 
-type SearchFilterPageProps = {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-};
+export default function SearchFilterPage() {
+  const { search, setSearch } = useLibraryContext();
 
-export default function SearchFilterPage({ search, setSearch }: SearchFilterPageProps) {
   return <SearchFilter search={search} setSearch={setSearch} />;
 }

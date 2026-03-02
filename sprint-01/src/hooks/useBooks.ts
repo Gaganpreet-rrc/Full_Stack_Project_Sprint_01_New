@@ -1,22 +1,33 @@
 import { useState } from "react";
-import { bookListRepo } from "../repositories/bookListRepo";
+import type { Book } from "../types/Book";
 
 export function useBooks() {
-  const [books, setBooks] = useState(bookListRepo.getAll());
+  const [books, setBooks] = useState<Book[]>([]);
+  const [search, setSearch] = useState("");
+  const [users, setUsers] = useState<string[]>([]);
 
   const addBook = (title: string) => {
-    bookListRepo.add({
+    const newBook: Book = {
+      id: Date.now(),
       title,
       author: "Unknown",
-      available: true
-    });
-    setBooks(bookListRepo.getAll());
+      available: true,
+    };
+
+    setBooks(prev => [...prev, newBook]);
   };
 
   const removeBook = (id: number) => {
-    bookListRepo.remove(id);
-    setBooks(bookListRepo.getAll());
+    setBooks(prev => prev.filter(book => book.id !== id));
   };
 
-  return { books, addBook, removeBook };
+return {
+  books,
+  addBook,
+  removeBook,
+  search,
+  setSearch,
+  users,
+  setUsers
+};
 }

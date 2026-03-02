@@ -1,10 +1,8 @@
 import { useLibraryContext } from "../../context/LibraryContext";
 import { BookList } from "../BookList/bookList";
 
-type Props = { search: string };
-
-export default function BookListPage({ search }: Props) {
-  const { books, addBook, removeBook } = useLibraryContext();
+export default function BookListPage() {
+  const { books, addBook, removeBook, search } = useLibraryContext();
 
   const filteredBooks = books.filter(book =>
     book.title.toLowerCase().includes(search.toLowerCase())
