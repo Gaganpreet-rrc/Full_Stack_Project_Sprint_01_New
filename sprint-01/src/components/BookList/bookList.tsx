@@ -7,7 +7,6 @@ export const BookList = () => {
   const { books, addBook, removeBook, isGridView } = useLibraryContext();
   const [newBook, setNewBook] = useState("");
 
-
   const handleAdd = () => {
   const validation = searchService.validateSearch(newBook);
   if (!validation.valid) {
