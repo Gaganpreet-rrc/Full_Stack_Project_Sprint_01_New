@@ -3,9 +3,6 @@ import { BookList } from "../BookList/bookList";
 import { useLibraryContext } from "../../context/LibraryContext";
 import { searchService } from "../../services/searchfilterService";
  
-export const BookListPage: React.FC = () => {
-  const { books, search, isGridView, toggleView } = useLibraryContext();
- 
 
 export const BookListPage: React.FC = () => {
   const { books, search, isGridView, toggleView } = useLibraryContext();
@@ -27,3 +24,5 @@ export const BookListPage: React.FC = () => {
       />
     </div>
   );
+}
+
