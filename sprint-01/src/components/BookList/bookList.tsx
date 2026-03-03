@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../BookList/bookList.css";
 import { useLibraryContext } from "../../context/LibraryContext";
 import { useLibrary } from "../../hooks/useLibrary";
+import { searchService } from "../../services/searchfilterService";
 
 export const BookList = () => {
   const { books, addBook, removeBook, isGridView } = useLibraryContext();
@@ -9,10 +10,14 @@ export const BookList = () => {
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
-    if (newBook.trim() !== "") {
+  const validation = searchService.validateSearch(newBook);
+  if (!validation.valid) {
+    alert(validation.message);
+    return;
+  }
       addBook(newBook.trim());
       setNewBook("");
-    }
+    
   };
 
   return (
