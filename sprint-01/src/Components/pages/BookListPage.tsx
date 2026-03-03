@@ -1,25 +1,27 @@
+import React from "react";
 import { BookList } from "../BookList/bookList";
-import { useLibrary } from "../../hooks/useLibrary";
+import { useLibraryContext } from "../../context/LibraryContext";
+import { searchService } from "../../services/searchfilterService";
 
-type Props = {
-  search: string;
-};
+export const BookListPage: React.FC = () => {
+  const { books, search, isGridView, toggleView } = useLibraryContext();
 
-export default function BookListPage({ search }: Props) {
-  const { isGridView, toggleView } = useLibrary();
+  const filteredBooks =
+    search && search.trim() !== ""
+      ? searchService.filterBooks(books, search)
+      : books;
 
   return (
     <div>
-      <h1>Library Books</h1>
+      <h1>Available Books</h1>
 
       <button onClick={toggleView}>
         {isGridView ? "Switch to List View" : "Switch to Grid View"}
       </button>
 
       <BookList
-        isGridView={isGridView}
-        search={search}
       />
     </div>
   );
 }
+

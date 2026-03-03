@@ -1,21 +1,23 @@
 import { useState } from "react";
 import "../BookList/bookList.css";
-import { useBooks } from "../../hooks/useBooks";
+import { useLibraryContext } from "../../context/LibraryContext";
 
-type Props = {
-  isGridView: boolean;
-  search: string;
-};
+import { searchService } from "../../services/searchfilterService";
 
-export const BookList = ({ isGridView }: Props) => {
-  const { books, addBook, removeBook } = useBooks();
+export const BookList = () => {
+  const { books, addBook, removeBook, isGridView, toggleView} = useLibraryContext();
+
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
-    if (newBook.trim() !== "") {
+  const validation = searchService.validateSearch(newBook);
+  if (!validation.valid) {
+    alert(validation.message);
+    return;
+  }
       addBook(newBook.trim());
       setNewBook("");
-    }
+    
   };
 
   return (
@@ -32,6 +34,10 @@ export const BookList = ({ isGridView }: Props) => {
         <button onClick={handleAdd}>Add</button>
       </div>
 
+      <button onClick={toggleView}>
+        {isGridView ? "Switch to List View" : "Switch to Grid View"}
+      </button>
+
       <div className={isGridView ? "grid-view books" : "list-view books"}>
         {books.map((book) => (
           <div key={book.id} className="book-item">
@@ -43,3 +49,6 @@ export const BookList = ({ isGridView }: Props) => {
     </section>
   );
 };
+
+
+
