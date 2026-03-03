@@ -1,14 +1,9 @@
 import { useState } from "react";
 import "../BookList/bookList.css";
-import type { Book } from "../../types/Book";
-import { useBooks } from "../../hooks/useBooks";
+import { useLibraryContext } from "../../context/LibraryContext";
 
-type Props = {
-  isGridView: boolean;
-};
-
-export const BookList = ({ isGridView }: Props) => {
-  const { books, addBook, removeBook } = useBooks();
+export const BookList = () => {
+  const { books, addBook, removeBook, isGridView } = useLibraryContext();
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
