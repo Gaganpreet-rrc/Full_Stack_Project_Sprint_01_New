@@ -1,7 +1,17 @@
+/**
+ * BookList Component (I.3)
+ *
+ * Shows the Hook-Service-Repository pattern:
+ * - Uses useLibraryContext hook for shared book state such as (add/remove books, toggle view).
+ * - Uses searchService to validate new book input.
+ * - Updates data via the repository indirectly through the hook.
+ *
+ * This keeps state shared between pages and avoids prop drilling.
+ */
+
 import { useState } from "react";
 import "../BookList/bookList.css";
 import { useLibraryContext } from "../../context/LibraryContext";
-
 import { searchService } from "../../services/searchfilterService";
 
 export const BookList = () => {
@@ -49,6 +59,5 @@ export const BookList = () => {
     </section>
   );
 };
-
 
 
