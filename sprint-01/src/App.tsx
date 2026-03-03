@@ -7,10 +7,9 @@ import { BookListPage } from "./Components/pages/BookListPage";
 import  SearchFilterPage  from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
 import {LibraryProvider} from "./context/LibraryContext";
-import { useState } from "react";
 
 function App() {
-  const [search, setSearch] = useState("");
+
   return (
     <BrowserRouter>
       <LibraryProvider>
@@ -20,7 +19,7 @@ function App() {
             <Route path="booklist" element={<BookListPage />} />
            <Route
               path="searchfilter"
-              element={<SearchFilterPage search={search} setSearch={setSearch} />}
+              element={<SearchFilterPage />}
             />
             <Route path="library-tips" element={<LibraryTipsPage />} />
             <Route path="login" element={<Login />} />
