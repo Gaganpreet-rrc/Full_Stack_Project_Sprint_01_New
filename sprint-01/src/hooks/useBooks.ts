@@ -2,7 +2,9 @@ import { useState } from "react";
 import { bookListRepo } from "../repositories/bookListRepo";
 
 export function useBooks() {
+  const [search, setSearch] = useState("");
   const [books, setBooks] = useState(bookListRepo.getAll());
+
 
   const addBook = (title: string) => {
     bookListRepo.add({
@@ -18,5 +20,5 @@ export function useBooks() {
     setBooks(bookListRepo.getAll());
   };
 
-  return { books, addBook, removeBook };
+  return { books, addBook, removeBook, search, setSearch };
 }
