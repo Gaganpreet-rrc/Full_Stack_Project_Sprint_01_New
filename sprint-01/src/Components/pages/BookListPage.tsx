@@ -1,12 +1,20 @@
-
+import React from "react";
 import { BookList } from "../BookList/bookList";
+import { useLibraryContext } from "../../context/LibraryContext";
 
-export default function BookListPage() {
+export const BookListPage: React.FC = () => {
+  const { isGridView, toggleView } = useLibraryContext();
+
   return (
     <div>
       <h1>Library Books</h1>
-      <BookList />
+
+      <button onClick={toggleView}>
+        {isGridView ? "Switch to List View" : "Switch to Grid View"}
+      </button>
+
+      <BookList/>
     </div>
   );
-}
+};
 

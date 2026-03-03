@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchFilterRepo } from "../../repositories/searchFilterRepo";
 import type { SearchFilter as SearchFilterType } from "../../types/SearchFilter";
+import { searchService } from "../../services/searchfilterService";
 
 export default function SearchFilter({
   search,
@@ -21,8 +22,13 @@ export default function SearchFilter({
   }, []);
 
   const handleSearch = () => {
-    if (!inputValue.trim()) return;
+    const result = searchService.validateSearch(inputValue);
 
+    if (!result.valid) {
+      alert(result.message);
+      return;
+    }
+    
     const exists = history.some(item => item.term === inputValue);
 
     if (!exists) {

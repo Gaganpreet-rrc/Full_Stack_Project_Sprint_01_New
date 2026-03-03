@@ -4,8 +4,8 @@ import { useLibraryContext } from "../../context/LibraryContext";
 import { useLibrary } from "../../hooks/useLibrary";
 
 export const BookList = () => {
-  const { books, addBook, removeBook } = useLibraryContext();
-  const { isGridView, toggleView } = useLibrary();
+  const { books, addBook, removeBook, isGridView } = useLibraryContext();
+
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
