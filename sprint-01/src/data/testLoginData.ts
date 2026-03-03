@@ -1,4 +1,4 @@
-import { LoginUser } from "../types/LoginUser";
+import type { LoginUser } from "../types/LoginUser";
 
 export const testLoginUsers: LoginUser[] = [
   { id: 1, username: "gaganpreet", password: "1234" },

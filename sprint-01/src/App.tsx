@@ -6,10 +6,9 @@ import Login from "./Components/login/login";
 import { BookListPage } from "./Components/pages/BookListPage";
 import  SearchFilterPage  from "./Components/pages/SearchFilterPage";
 import LibraryTipsPage from "./Components/LibraryTips/LibraryTips";
-import {LibraryProvider} from "./context/LibraryContext";
+import { LibraryProvider } from "./context/LibraryContext";
 
 function App() {
-
   return (
     <BrowserRouter>
       <LibraryProvider>
@@ -17,10 +16,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="booklist" element={<BookListPage />} />
-           <Route
-              path="searchfilter"
-              element={<SearchFilterPage />}
-            />
+            <Route path="searchfilter" element={<SearchFilterPage />} />
             <Route path="library-tips" element={<LibraryTipsPage />} />
             <Route path="login" element={<Login />} />
           </Route>

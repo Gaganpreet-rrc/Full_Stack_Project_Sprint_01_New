@@ -6,6 +6,10 @@ import { searchService } from "../../services/searchfilterService";
 export const BookListPage: React.FC = () => {
   const { books, search, isGridView, toggleView } = useLibraryContext();
  
+
+export const BookListPage: React.FC = () => {
+  const { books, search, isGridView, toggleView } = useLibraryContext();
+
   const filteredBooks =
     search && search.trim() !== ""
       ? searchService.filterBooks(books, search)
@@ -18,9 +22,8 @@ export const BookListPage: React.FC = () => {
       <button onClick={toggleView}>
         {isGridView ? "Switch to List View" : "Switch to Grid View"}
       </button>
- 
+
       <BookList
       />
     </div>
   );
-}
