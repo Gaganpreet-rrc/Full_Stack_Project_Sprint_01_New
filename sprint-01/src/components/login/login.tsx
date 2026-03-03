@@ -1,28 +1,51 @@
 import { useState } from "react";
+import { LoginRepository } from "../../repositories/LoginRepo";
 import "./login.css";
 
-type LoginProps = {
-  users: string[];
-  setUsers: React.Dispatch<React.SetStateAction<string[]>>;
-};
+// Initialize the repository
+const loginRepo = new LoginRepository();
 
-const Login = ({ users, setUsers }: LoginProps) => {
-
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedInUsers, setLoggedInUsers] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
 
+  // Handle login form submission
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (username.trim() === "" || password.trim() === "") return;
+    if (username.trim() === "" || password.trim() === "") {
+      setMessage("Please enter username and password");
+      return;
+    }
 
-    setUsers([...users, username]);
+    // Check username in repository
+    const user = loginRepo.getByUsername(username);
+    if (!user) {
+      setMessage("User not found");
+      return;
+    }
+
+    // Check password
+    if (user.password !== password) {
+      setMessage("Incorrect password");
+      return;
+    }
+
+    if (!loggedInUsers.includes(username)) {
+      setLoggedInUsers([...loggedInUsers, username]);
+    }
+
+    setMessage(`Welcome ${username}!`);
     setUsername("");
     setPassword("");
   };
 
+  // Handle logout
   const handleLogout = (index: number) => {
-    setUsers(users.filter((_, i) => i !== index));
+    const updatedUsers = loggedInUsers.filter((_, i) => i !== index);
+    setLoggedInUsers(updatedUsers);
   };
 
   return (
@@ -47,11 +70,13 @@ const Login = ({ users, setUsers }: LoginProps) => {
         <button type="submit">Login</button>
       </form>
 
+      {message && <p>{message}</p>}
+
       <h3>Logged In Users</h3>
       <ul>
-        {users.map((user, index) => (
+        {loggedInUsers.map((user, index) => (
           <li key={index}>
-            {user}
+            {user}{" "}
             <button onClick={() => handleLogout(index)}>Logout</button>
           </li>
         ))}
