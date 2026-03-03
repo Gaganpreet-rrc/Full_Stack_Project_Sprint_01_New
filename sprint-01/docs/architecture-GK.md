@@ -6,7 +6,7 @@
 **Where used:** BookList.tsx, Home.tsx via useLibraryContext.
 
 ## 2. bookListRepo Repository
-**What it does:** Handles book data operations like add, get, update, remove.  
+**What it does:** Handles book data operations like add, get, update, remove.
 **Logic & separation:** Only manages data; does not handle UI or validation.  
 **Where used:** Accessed through useBooks hook in BookList.tsx and Home.tsx.
 
