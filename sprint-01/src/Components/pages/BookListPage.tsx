@@ -1,43 +1,25 @@
 import React from "react";
-import type { Book } from "../../types/Book";
-import BookList from "../BookList/bookList";
+import { BookList } from "../BookList/bookList";
+import { useLibraryContext } from "../../context/LibraryContext";
 import { searchService } from "../../services/searchfilterService";
-import { useLibrary } from "../../hooks/useLibrary";
 
-type BookListPageProps = {
-  books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
-  search: string;
-};
+export const BookListPage: React.FC = () => {
+  const { books, search, isGridView, toggleView } = useLibraryContext();
 
-const BookListPage: React.FC<BookListPageProps> = ({ books, setBooks, search }) => {
-  const { isGridView, toggleView } = useLibrary();
-
-  const validation = searchService.validateSearch(search);
-
-  const filteredBooks = validation.valid
-    ? searchService.filterBooks(books, search)
-    : books; 
+  const filteredBooks =
+    search && search.trim() !== ""
+      ? searchService.filterBooks(books, search)
+      : books;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Library Books</h1>
+    <div>
+      <h1>Available Books</h1>
 
-      <button onClick={toggleView} style={{ marginBottom: "10px" }}>
+      <button onClick={toggleView}>
         {isGridView ? "Switch to List View" : "Switch to Grid View"}
       </button>
 
-      {!validation.valid && (
-        <p style={{ color: "red", marginBottom: "10px" }}>{validation.message}</p>
-      )}
-
-      <BookList
-        books={filteredBooks}
-        setBooks={setBooks}
-        isGridView={isGridView}
-      />
+      <BookList />
     </div>
   );
 };
-
-export default BookListPage;

@@ -1,52 +1,42 @@
-import React, { useState } from "react";
-import "./bookList.css";
-import { bookListRepo } from "../../repositories/bookListRepo";
-import type { Book } from "../../types/Book";
+import { useState } from "react";
+import "../BookList/bookList.css";
+import { useLibraryContext } from "../../context/LibraryContext";
+import { searchService } from "../../services/searchfilterService";
 
-type BookListProps = {
-  books: Book[];
-  setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
-};
-
-const BookList = ({ books, setBooks }: BookListProps) => {
+export const BookList = () => {
+  const { books, addBook, removeBook, isGridView } = useLibraryContext();
   const [newBook, setNewBook] = useState("");
 
-  const addBook = () => {
-    if (newBook.trim() !== "") {
-      bookListRepo.add({
-        title: newBook.trim(),
-        author: "Unknown",   
-        available: true
-      });
 
-      setBooks(bookListRepo.getAll());
+  const handleAdd = () => {
+  const validation = searchService.validateSearch(newBook);
+  if (!validation.valid) {
+    alert(validation.message);
+    return;
+  }
+      addBook(newBook.trim());
       setNewBook("");
-    }
-  };
-
-  const removeBook = (id: number) => {
-    bookListRepo.remove(id);
-    setBooks(bookListRepo.getAll());
+    
   };
 
   return (
     <section className="book-list">
-      <h2>Available Books in Library</h2>
+      <h2>Available Books</h2>
 
-      <div className="add-book">
+      <div>
         <input
           type="text"
           placeholder="Add a new book..."
           value={newBook}
           onChange={(e) => setNewBook(e.target.value)}
         />
-        <button onClick={addBook}>Add Book</button>
+        <button onClick={handleAdd}>Add</button>
       </div>
 
-      <div className="books">
+      <div className={isGridView ? "grid-view books" : "list-view books"}>
         {books.map((book) => (
           <div key={book.id} className="book-item">
-            {book.title}
+            <span>{book.title}</span>
             <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
@@ -54,5 +44,3 @@ const BookList = ({ books, setBooks }: BookListProps) => {
     </section>
   );
 };
-
-export default BookList;
