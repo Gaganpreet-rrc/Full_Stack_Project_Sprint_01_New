@@ -1,8 +1,9 @@
 import { useState } from "react";
 import type { Book } from "../types/Book";
+import { testBookData } from "../data/testBookData"; 
 
 export function useBooks() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<Book[]>(testBookData);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState<string[]>([]);
 

@@ -1,14 +1,11 @@
 import { useState } from "react";
 import "../BookList/bookList.css";
-import type { Book } from "../../types/Book";
+import { useLibraryContext } from "../../context/LibraryContext";
+import { useLibrary } from "../../hooks/useLibrary";
 
-type Props = {
-  books: Book[];
-  addBook: (title: string) => void;
-  removeBook: (id: number) => void;
-};
-
-export const BookList = ({ books, addBook, removeBook }: Props) => {
+export const BookList = () => {
+  const { books, addBook, removeBook } = useLibraryContext();
+  const { isGridView, toggleView } = useLibrary();
   const [newBook, setNewBook] = useState("");
 
   const handleAdd = () => {
@@ -32,10 +29,14 @@ export const BookList = ({ books, addBook, removeBook }: Props) => {
         <button onClick={handleAdd}>Add</button>
       </div>
 
-      <div>
+      <button onClick={toggleView}>
+        {isGridView ? "Switch to List View" : "Switch to Grid View"}
+      </button>
+
+      <div className={isGridView ? "grid-view books" : "list-view books"}>
         {books.map((book) => (
-          <div key={book.id}>
-            {book.title}{" "}
+          <div key={book.id} className="book-item">
+            <span>{book.title}</span>
             <button onClick={() => removeBook(book.id)}>Remove</button>
           </div>
         ))}
@@ -43,3 +44,6 @@ export const BookList = ({ books, addBook, removeBook }: Props) => {
     </section>
   );
 };
+
+
+
