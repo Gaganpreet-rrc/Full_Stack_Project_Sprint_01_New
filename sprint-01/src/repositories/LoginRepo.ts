@@ -1,31 +1,29 @@
 import type { LoginUser } from "../types/LoginUser";
+import { testLoginUsers } from "../data/testLoginData";
 
-// Test data for login
-let testLoginUsers: LoginUser[] = [
-  { id: 1, username: "gaganpreet", password: "1234" },
-  { id: 2, username: "manjot", password: "abcd" },
-];
+let users: LoginUser[] = [...testLoginUsers];
 
 export class LoginRepository {
+
   // Get all users
   getAll(): LoginUser[] {
-    return testLoginUsers;
+    return users;
   }
 
   // Get user by username 
   getByUsername(username: string): LoginUser | undefined {
-    return testLoginUsers.find(user => user.username === username);
+    return users.find(user => user.username === username);
   }
 
   // Create a new login user
   create(user: LoginUser): LoginUser {
-    testLoginUsers.push(user);
+    users.push(user);
     return user;
   }
 
   // Update user
   update(id: number, updatedUser: Partial<LoginUser>): LoginUser | undefined {
-    const user = testLoginUsers.find(u => u.id === id);
+    const user = users.find(u => u.id === id);
     if (user) {
       Object.assign(user, updatedUser);
       return user;
@@ -35,8 +33,8 @@ export class LoginRepository {
 
   // Delete a user
   delete(id: number): boolean {
-    const beforeDeleteCount = testLoginUsers.length;
-    testLoginUsers = testLoginUsers.filter(user => user.id !== id);
-    return testLoginUsers.length < beforeDeleteCount;
+    const beforeDeleteCount = users.length;
+    users = users.filter(user => user.id !== id);
+    return users.length < beforeDeleteCount;
   }
 }

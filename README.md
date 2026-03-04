@@ -32,3 +32,19 @@ This project is a Library Management Application. It allows users to explore boo
 
 - Architecture Document (I.4)
     - Created docs/architecture-Harman.md explaining the responsibilities and interaction of useSearchFilter, searchService and searchFilterRepo clearly documenting separation of concerns and usage.
+### Gaganpreet Contribution:
+
+- **Hooks (T.1 & T.4)**  
+  - Created useBooks and useLibrary hooks to manage book and view state.  
+  - Hooks are used in multiple components (Home, BookList) to avoid prop drilling and share state across pages.
+
+- **Repositories (I.1 & I.2)**  
+  - Built bookListRepo to handle CRUD operations on books.  
+  - Repository uses test data to simulate external data and supports adding, updating, and removing books.  
+
+- **Components (I.3)**  
+  - Updated BookList and Home components to follow the Hook-Service-Repository pattern.  
+  - Components use hooks for state, services for validation, and repository indirectly for data.  
+
+- **Architecture Document (I.4)**  
+  - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.

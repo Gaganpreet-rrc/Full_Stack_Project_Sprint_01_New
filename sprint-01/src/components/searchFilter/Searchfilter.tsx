@@ -4,13 +4,22 @@ import { searchFilterRepo } from "../../repositories/searchFilterRepo";
 import type { SearchFilter as SearchFilterType } from "../../types/SearchFilter";
 import { searchService } from "../../services/searchfilterService";
 
+/**
+ * SearchFilter Component
+ * - Lets users search for books.
+ * - Keeps track of previous searches (history).
+ * - Checks input using the service (`searchService`) for validation.
+ * - Saves history using the repository (`searchFilterRepo`).
+ * - Navigates to the book list page after search.
+ */
+
 export default function SearchFilter({
   search,
   setSearch,
 }: {
   search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-}) {
+  setSearch: React.Dispatch<React.SetStateAction<string>>,
+}){
 
   const navigate = useNavigate();
 
