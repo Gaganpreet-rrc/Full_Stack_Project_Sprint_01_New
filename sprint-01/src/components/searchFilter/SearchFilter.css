@@ -92,12 +92,12 @@ body {
   background-color: #969991;
   border: none;
   color: #FFFFFF;
-  padding: 0.3em 0.6em;
-  border-radius: 4px;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 10px;
   font-family: Arial, sans-serif;
-  margin-left: 0.5rem;
+  margin-left: 0.5 rem;
 }
 
 .remove-btn:hover {
@@ -108,6 +108,8 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+  gap: 4 rem; 
+  margin-bottom: 0.8rem;
 }
 
 @media (max-width: 600px) {
