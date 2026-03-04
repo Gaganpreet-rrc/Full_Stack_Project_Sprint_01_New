@@ -17,19 +17,28 @@ This project is a Library Management Application. It allows users to explore boo
 - As a user, I want to log in so that my book list and preferences are saved for future use.
 - As a user, I want to view library tips and recommendations so that I can make better reading choices and use library resources effectively.
 
-### Gaganpreet Contribution:
+### Manjot Contribution:
+# Service Definition
+- Reviewed my team member’s `LoginService` implementation and provided feedback.
+- Ensured the service strictly contains business logic.
+- Confirmed proper separation from presentation and data access layers before committing changes.
 
-- **Hooks (T.1 & T.4)**  
-  - Created useBooks and useLibrary hooks to manage book and view state.  
-  - Hooks are used in multiple components (Home, BookList) to avoid prop drilling and share state across pages.
+# Login Service
+- Handles authentication business logic (validates username and password).
+- Uses `LoginRepository` to retrieve user data.
+- Keeps business rules separate from UI and data access logic.
 
-- **Repositories (I.1 & I.2)**  
-  - Built bookListRepo to handle CRUD operations on books.  
-  - Repository uses test data to simulate external data and supports adding, updating, and removing books.  
+# Login Repository
+- Manages CRUD operations for login users.
+- Uses TypeScript test data (`testLoginUsers`) to simulate external data.
+- Handles only data access logic, no UI or validation logic.
 
-- **Components (I.3)**  
-  - Updated BookList and Home components to follow the Hook-Service-Repository pattern.  
-  - Components use hooks for state, services for validation, and repository indirectly for data.  
+# Login Component
+- Uses `useLogin` hook to manage login UI state.
+- Does not directly access service or repository.
+- Demonstrates the Hook → Service → Repository architecture flow.
 
-- **Architecture Document (I.4)**  
-  - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.
+# Architecture Document
+- Located at `docs/architecture-MK.md`.
+- Explains hooks, services, and repository structure.
+- Describes separation of presentation, business, and data concerns.
