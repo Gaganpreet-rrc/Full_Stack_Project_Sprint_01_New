@@ -17,3 +17,18 @@ This project is a Library Management Application. It allows users to explore boo
 - As a user, I want to log in so that my book list and preferences are saved for future use.
 - As a user, I want to view library tips and recommendations so that I can make better reading choices and use library resources effectively.
 
+### Harmanpreet Contribution:
+- Services (T.2 & T.4)
+  - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
+  - The service is accessed through the useSearchFilter hook, maintaining proper separation between UI and business logic.
+
+- Repositories and Test Data (I.1 & I.2)
+    - Created searchFilterRepo to manage search history with methods to add, get, update, and remove search terms, using test data for initialization.
+    - The repository is accessed through searchService and useSearchFilter, ensuring components do not directly interact with data storage logic.
+
+- Component(I.3)
+    - Created the useSearchFilter custom hook to encapsulate search validation, history management and navigation logic, ensuring business and persistence logic are separated from the UI layer.
+    - Refactored the SearchFilter component to use the useSearchFilter hook so the component focuses only on UI rendering and user interaction.
+
+- Architecture Document (I.4)
+    - Created docs/architecture-Harman.md explaining the responsibilities and interaction of useSearchFilter, searchService and searchFilterRepo clearly documenting separation of concerns and usage.
