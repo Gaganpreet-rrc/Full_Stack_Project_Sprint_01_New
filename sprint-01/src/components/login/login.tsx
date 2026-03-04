@@ -1,35 +1,38 @@
 import { useState } from "react";
+import { useLogin } from "../../hooks/useLogin"
 import "./login.css";
 
-type LoginProps = {
-  users: string[];
-  setUsers: React.Dispatch<React.SetStateAction<string[]>>;
-};
+/**
+ * Login Component
+ *
+ * - Manages login UI for users
+ * - Handles login and logout directly using the repository
+ *
+ * - Component directly uses the repository to fetch user data
+ * - For this sprint, this component demonstrates direct repository use
+ */
 
-const Login = ({ users, setUsers }: LoginProps) => {
-
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  const {loggedInUsers, message, handleLogin, handleLogout} = useLogin();
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (username.trim() === "" || password.trim() === "") return;
 
-    setUsers([...users, username]);
+    handleLogin(username, password);
+
     setUsername("");
     setPassword("");
-  };
-
-  const handleLogout = (index: number) => {
-    setUsers(users.filter((_, i) => i !== index));
-  };
+  };  
 
   return (
     <div className="login">
       <h2>Login</h2>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Username"
@@ -47,11 +50,13 @@ const Login = ({ users, setUsers }: LoginProps) => {
         <button type="submit">Login</button>
       </form>
 
+      {message && <p>{message}</p>}
+
       <h3>Logged In Users</h3>
       <ul>
-        {users.map((user, index) => (
+        {loggedInUsers.map((user, index) => (
           <li key={index}>
-            {user}
+            {user}{" "}
             <button onClick={() => handleLogout(index)}>Logout</button>
           </li>
         ))}

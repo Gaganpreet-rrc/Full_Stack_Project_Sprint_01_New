@@ -1,40 +1,57 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchFilterRepo } from "../../repositories/searchFilterRepo";
+import type { SearchFilter as SearchFilterType } from "../../types/SearchFilter";
+import { searchService } from "../../services/searchfilterService";
+
+/**
+ * SearchFilter Component
+ * - Lets users search for books.
+ * - Keeps track of previous searches (history).
+ * - Checks input using the service (`searchService`) for validation.
+ * - Saves history using the repository (`searchFilterRepo`).
+ * - Navigates to the book list page after search.
+ */
 
 export default function SearchFilter({
   search,
   setSearch,
 }: {
   search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-}) {
+  setSearch: React.Dispatch<React.SetStateAction<string>>,
+}){
+
   const navigate = useNavigate();
-  const [history, setHistory] = useState<string[]>([]);
+
+  const [history, setHistory] = useState<SearchFilterType[]>([]);
   const [inputValue, setInputValue] = useState(search);
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem("searchHistory");
-    if (savedHistory) setHistory(JSON.parse(savedHistory));
+    setHistory(searchFilterRepo.getAll());
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("searchHistory", JSON.stringify(history));
-  }, [history]);
-
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-  };
-
   const handleSearch = () => {
-    if (inputValue && !history.includes(inputValue)) {
-      setHistory([...history, inputValue]); 
+    const result = searchService.validateSearch(inputValue);
+
+    if (!result.valid) {
+      alert(result.message);
+      return;
     }
-    setSearch(inputValue); 
-    navigate("/booklist"); 
+    
+    const exists = history.some(item => item.term === inputValue);
+
+    if (!exists) {
+      searchFilterRepo.add(inputValue);
+      setHistory(searchFilterRepo.getAll());
+    }
+
+    setSearch(inputValue);
+    navigate("/booklist");
   };
 
-  const handleRemove = (term: string) => {
-    setHistory(history.filter((item) => item !== term));
+  const handleRemove = (id: number) => {
+    searchFilterRepo.remove(id);
+    setHistory(searchFilterRepo.getAll());
   };
 
   return (
@@ -44,15 +61,15 @@ export default function SearchFilter({
           e.preventDefault();
           handleSearch();
         }}
-        style={{ marginBottom: "10px" }}
       >
         <input
           type="text"
-          placeholder="Enter a word, phrase, or acronym..."
+          placeholder="Search Book..."
           value={inputValue}
-          onChange={(e) => handleInputChange(e.target.value)}
-          className="filter-panel"
+          onChange={(e) => setInputValue(e.target.value)}
+          className="filter-input"
         />
+
         <button type="submit" className="search-btn">
           Search
         </button>
@@ -60,12 +77,11 @@ export default function SearchFilter({
 
       {history.length > 0 && (
         <ul className="history-list">
-          {history.map((term, index) => (
-            <li key={index}>
-              {term}{" "}
+          {history.map((item) => (
+            <li key={item.id}>
+              {item.term}
               <button
-                type="button"
-                onClick={() => handleRemove(term)}
+                onClick={() => handleRemove(item.id)}
                 className="remove-btn"
               >
                 Remove
@@ -77,4 +93,3 @@ export default function SearchFilter({
     </div>
   );
 }
-
