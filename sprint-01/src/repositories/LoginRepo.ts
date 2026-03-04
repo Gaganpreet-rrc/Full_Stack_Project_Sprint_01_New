@@ -11,9 +11,9 @@ export class LoginRepository {
   }
 
   // Get user by username 
-  getByUsername(username: string): LoginUser | undefined {
-    return users.find(user => user.username === username);
-  }
+ getByUsername(username: string): LoginUser | undefined {
+  return users.find(user => user.username.toLowerCase() === username.toLowerCase());
+}
 
   // Create a new login user
   create(user: LoginUser): LoginUser {

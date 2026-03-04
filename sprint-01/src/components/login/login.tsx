@@ -1,58 +1,38 @@
 import { useState } from "react";
-import { LoginRepository } from "../../repositories/LoginRepo";
+import { useLogin } from "../../hooks/useLogin"
 import "./login.css";
 
-// Initialize the repository
-const loginRepo = new LoginRepository();
+/**
+ * Login Component
+ *
+ * - Manages login UI for users
+ * - Handles login and logout directly using the repository
+ *
+ * - Component directly uses the repository to fetch user data
+ * - For this sprint, this component demonstrates direct repository use
+ */
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUsers, setLoggedInUsers] = useState<string[]>([]);
-  const [message, setMessage] = useState("");
 
-  // Handle login form submission
-  const handleLogin = (e: React.FormEvent) => {
+  const {loggedInUsers, message, handleLogin, handleLogout} = useLogin();
+
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (username.trim() === "" || password.trim() === "") return;
 
-    if (username.trim() === "" || password.trim() === "") {
-      setMessage("Please enter username and password");
-      return;
-    }
+    handleLogin(username, password);
 
-    // Check username in repository
-    const user = loginRepo.getByUsername(username);
-    if (!user) {
-      setMessage("User not found");
-      return;
-    }
-
-    // Check password
-    if (user.password !== password) {
-      setMessage("Incorrect password");
-      return;
-    }
-
-    if (!loggedInUsers.includes(username)) {
-      setLoggedInUsers([...loggedInUsers, username]);
-    }
-
-    setMessage(`Welcome ${username}!`);
     setUsername("");
     setPassword("");
-  };
-
-  // Handle logout
-  const handleLogout = (index: number) => {
-    const updatedUsers = loggedInUsers.filter((_, i) => i !== index);
-    setLoggedInUsers(updatedUsers);
-  };
+  };  
 
   return (
     <div className="login">
       <h2>Login</h2>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Username"

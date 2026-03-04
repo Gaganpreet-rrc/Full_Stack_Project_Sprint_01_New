@@ -1,29 +1,25 @@
 import React from "react";
-import { BookList } from "../BookList/bookList";
 import { useLibraryContext } from "../../context/LibraryContext";
-import { searchService } from "../../services/searchfilterService";
- 
+import { BookList } from "../BookList/BookList";
+
+/**
+ * BookListPage Component
+ *
+ * - Uses useLibraryContext hook for shared book state
+ * - Shows BookList component
+ */
 export const BookListPage: React.FC = () => {
   const { books, search, isGridView, toggleView } = useLibraryContext();
- 
 
-export const BookListPage: React.FC = () => {
-  const { books, search, isGridView, toggleView } = useLibraryContext();
+  // You can filter books here if needed
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(search.toLowerCase())
+  );
 
-  const filteredBooks =
-    search && search.trim() !== ""
-      ? searchService.filterBooks(books, search)
-      : books;
- 
   return (
     <div>
-      <h1>Available Books</h1>
- 
-      <button onClick={toggleView}>
-        {isGridView ? "Switch to List View" : "Switch to Grid View"}
-      </button>
-
-      <BookList
-      />
+      <h1>Library Books</h1>
+      <BookList />
     </div>
   );
+};
