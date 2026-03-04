@@ -1,7 +1,6 @@
 import type { SearchFilter } from "../types/SearchFilter";
 import { testSearchFilterData } from "../data/testSearchFilterData";
 
-// Initialize
 let searchHistory: SearchFilter[] = [...testSearchFilterData];
 
 export const searchFilterRepo = {
