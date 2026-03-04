@@ -17,6 +17,33 @@ This project is a Library Management Application. It allows users to explore boo
 - As a user, I want to log in so that my book list and preferences are saved for future use.
 - As a user, I want to view library tips and recommendations so that I can make better reading choices and use library resources effectively.
 
+
+### Manjot Contribution:
+# Service Definition:
+- Reviewed my team member’s `LoginService` implementation and provided feedback.
+- Ensured the service strictly contains business logic.
+- Confirmed proper separation from presentation and data access layers before committing changes.
+
+# Login Service:
+- Handles authentication business logic (validates username and password).
+- Uses `LoginRepository` to retrieve user data.
+- Keeps business rules separate from UI and data access logic.
+
+# Login Repository:
+- Manages CRUD operations for login users.
+- Uses TypeScript test data (`testLoginUsers`) to simulate external data.
+- Handles only data access logic, no UI or validation logic.
+
+# Login Component:
+- Uses `useLogin` hook to manage login UI state.
+- Does not directly access service or repository.
+- Demonstrates the Hook → Service → Repository architecture flow.
+
+# Architecture Document:
+- Located at `docs/architecture-MK.md`.
+- Explains hooks, services, and repository structure.
+- Describes separation of presentation, business, and data concerns.
+=======
 ### Harmanpreet Contribution:
 - Services (T.2 & T.4)
   - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
@@ -48,3 +75,4 @@ This project is a Library Management Application. It allows users to explore boo
 
 - **Architecture Document (I.4)**  
   - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.
+
