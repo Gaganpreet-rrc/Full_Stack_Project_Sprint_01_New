@@ -1,17 +1,11 @@
 import React from "react";
 import { BookList } from "../BookList/bookList";
-import { useLibraryContext } from "../../context/LibraryContext";
-import { searchService } from "../../services/searchfilterService";
- 
- 
+import { useLibraryContext } from "../../context/LibraryContext"; 
+
 export const BookListPage: React.FC = () => {
-  const { books, search, isGridView, toggleView } = useLibraryContext();
+  const { isGridView, toggleView } = useLibraryContext();
  
-  const filteredBooks =
-    search && search.trim() !== ""
-      ? searchService.filterBooks(books, search)
-      : books;
- 
+
   return (
     <div>
       <h1>Available Books</h1>
