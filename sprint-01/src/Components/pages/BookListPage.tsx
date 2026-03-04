@@ -13,7 +13,7 @@ export const BookListPage: React.FC = () => {
       <button onClick={toggleView}>
         {isGridView ? "Switch to List View" : "Switch to Grid View"}
       </button>
- 
+
       <BookList
       />
     </div>
