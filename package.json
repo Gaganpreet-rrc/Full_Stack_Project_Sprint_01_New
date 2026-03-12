@@ -1,0 +1,27 @@
+{
+  "name": "fullstack-project",
+  "workspaces": [
+    "apps/*"
+  ],
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+
+    "dev": "concurrently \"npm:start:frontend\" \"npm:start:backend\"",
+    "migrate:backend": "npx --workspace=@full_stack/backend prisma migrate dev",
+    "start:frontend": "npm run dev --workspace=@full_stack/frontend",
+    "start:backend": "npm start --workspace=@full_stack/backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

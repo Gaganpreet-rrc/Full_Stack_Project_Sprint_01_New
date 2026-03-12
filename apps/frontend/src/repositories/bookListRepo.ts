@@ -1,4 +1,4 @@
-import type { Book } from "./../types/Book";
+import type { Book } from "../types/Book";
 import { testBookData } from "../data/testBookData";
 
 // initialize with test data
