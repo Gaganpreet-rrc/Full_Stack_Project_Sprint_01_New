@@ -8,12 +8,12 @@
  *
  * This keeps state shared between pages and avoids prop drilling.
  */
- 
+
 import { useState } from "react";
 import "./bookList.css";
 import { useLibraryContext } from "../../context/LibraryContext";
 import { searchService } from "../../services/searchfilterService";
- 
+
 export const BookList = () => {
   const { books, addBook, removeBook, isGridView, toggleView} = useLibraryContext();
  
