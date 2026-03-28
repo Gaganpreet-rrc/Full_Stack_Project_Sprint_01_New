@@ -19,6 +19,10 @@ export function Nav() {
         <NavLink to="/booklist">
           Book List
         </NavLink>
+
+        <NavLink to="/library-tips">
+          Library Tips
+        </NavLink>
       </div>
     </nav>
   );
