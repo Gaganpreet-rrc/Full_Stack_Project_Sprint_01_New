@@ -1,8 +1,13 @@
 import express from "express";
 import cors from "cors";
+import bookRoutes from "./routes/bookRoutes";
+
 
 const app = express();
 const PORT = 3000;
+app.use(express.json());
+
+app.use("/books", bookRoutes);
 
 app.use(
   cors({
