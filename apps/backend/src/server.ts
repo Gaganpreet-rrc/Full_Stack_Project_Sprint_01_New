@@ -1,6 +1,5 @@
 import express from "express";
 import authRoutes from "../src/routes/auth.routes"
-import userRoutes from "./routes/userRoutes";
 import "dotenv/config";
 
 const app = express();
@@ -10,7 +9,6 @@ const PORT = 3000;
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 
-app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend is running!");
