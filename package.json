@@ -6,7 +6,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-
     "dev": "concurrently \"npm:start:frontend\" \"npm:start:backend\"",
     "migrate:backend": "npx --workspace=@full_stack/backend prisma migrate dev",
     "start:frontend": "npm run dev --workspace=@full_stack/frontend",
@@ -22,6 +21,9 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "@prisma/client": "^7.6.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1"
   }
 }

@@ -1,6 +1,9 @@
 import express from "express";
 import authRoutes from "../src/routes/auth.routes"
 import "dotenv/config";
+import cors from "cors";
+import bookRoutes from "./routes/bookRoutes";
+
 
 const app = express();
 app.use(express.json());
@@ -9,6 +12,16 @@ const PORT = 3000;
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 
+
+app.use("/books", bookRoutes);
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Backend is running!");
