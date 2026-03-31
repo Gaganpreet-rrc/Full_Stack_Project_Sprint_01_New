@@ -15,6 +15,7 @@ model User {
   books    Book[]
 }
 
+
 model Book {
   id      Int     @id @default(autoincrement())
   title   String
