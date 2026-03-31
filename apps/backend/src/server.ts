@@ -1,5 +1,5 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes";
+import searchFilterRoutes from "./routes/searchFilterRoutes"
 import "dotenv/config";
 
 
@@ -8,7 +8,8 @@ app.use(express.json());
 
 const PORT = 3000;
 
-app.use("/users", userRoutes);
+app.use("/search-history", searchFilterRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Backend is running!");
