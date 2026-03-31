@@ -8,16 +8,20 @@ import libraryTipsRoutes from "./routes/libraryTipsRoutes";
 
 
 const app = express();
-app.use(cors()); 
-app.use(express.json());
 
 const PORT = 3000;
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
+  }));
+
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 
-
-
-app.use("/books", bookRoutes);
+app.use("/api/books", bookRoutes);
 
 app.use("/search-history", searchFilterRoutes);
 
