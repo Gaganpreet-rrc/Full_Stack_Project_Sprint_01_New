@@ -76,3 +76,22 @@ This project is a Library Management Application. It allows users to explore boo
 - **Architecture Document (I.4)**  
   - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.
 
+### Sprint-04 - Gaganpreet Kaur
+
+#### Overview
+- For this sprint, the project was refactored to include a full back-end application with Node.js, Express, and Prisma. The front-end now communicates properly with the back-end to persist data across sessions.
+
+**T.1: Back-end App Initialization (P0)**
+- The back-end was implemented using Node.js and Express, while both the front-end and back-end are TypeScript projects. A monorepo structure was maintained with npm workspaces to manage both applications efficiently.
+
+**I.1: Back-end Resource Endpoint (P1)**
+- Routes were created for managing books (GET, POST, DELETE). Controllers handle incoming requests, and services communicate with the Prisma client to interact with the database. All endpoints were tested using Postman and verified to work correctly with the front-end.
+
+**I.2: Resource Database Schema (P1)**
+- A Book model was added to the Prisma schema with fields for id, title, and author. The database conforms to Third Normal Form (3NF), and migrations were applied to the development database to ensure proper structure.
+
+**I.3: Front-end Repository Sends Requests to Back-end (P2)**
+- The front-end now fetches and updates data directly from the back-end, replacing temporary front-end storage. Adding or deleting books updates both the database and the front-end UI.
+
+**I.4: Application State Persistence (P2)**
+- Data persistence was verified such as books added or deleted remain in the database between sessions. Both Postman and the front-end UI confirm that the back-end and front-end are fully synchronized.
