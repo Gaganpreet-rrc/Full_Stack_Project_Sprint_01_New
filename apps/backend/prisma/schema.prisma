@@ -33,3 +33,4 @@ model LibraryTip {
   title       String
   description String
 }
+
