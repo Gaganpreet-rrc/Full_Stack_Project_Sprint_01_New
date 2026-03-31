@@ -13,3 +13,8 @@ model User {
   email String @unique
   password String
 }
+
+model SearchFilter {
+  id   Int    @id @default(autoincrement())
+  term String
+}
