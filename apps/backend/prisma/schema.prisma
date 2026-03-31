@@ -15,11 +15,7 @@ model User {
   books    Book[]
 }
 
-
-model Book {
-  id      Int     @id @default(autoincrement())
-  title   String
-  author  String
-  userId  Int?
-  user    User?    @relation(fields: [userId], references: [id])
+model SearchFilter {
+  id   Int    @id @default(autoincrement())
+  term String
 }
