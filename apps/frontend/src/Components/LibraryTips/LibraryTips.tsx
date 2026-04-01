@@ -19,7 +19,9 @@ export default function LibraryTips() {
       <form onSubmit={onSubmit} className="library-tips-form">
         <input
           value={newTip}
-          onChange={(e) => setNewTip(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setNewTip(e.target.value)
+          }
           placeholder="Write a tip..."
         />
         <button type="submit">Add</button>
@@ -30,7 +32,7 @@ export default function LibraryTips() {
       <ul className="library-tips-list">
         {tips.map((tip) => (
           <li key={tip.id} className="library-tip-item">
-            <span>{tip.text}</span>
+            <span>{tip.title}</span>
             <button onClick={() => removeTip(tip.id)}>Remove</button>
           </li>
         ))}
