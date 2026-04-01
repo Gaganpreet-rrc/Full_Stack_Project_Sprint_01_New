@@ -82,6 +82,7 @@ This project is a Library Management Application. It allows users to explore boo
 - **T.2 Development SQL Database (P0)**
   - I created a development SQL database to use for testing and development purposes.
   - The database is connected to the Prisma schema, allowing the application to interact with it safely.
+  - Created the .env file with DATABASE_URL to connect the application to the PgAdmin database.
 
 - **I.1: Back-end Resource Endpoint (P1)**
   - Implemented backend routes: `POST /login` for user login with validation, and `GET /users` to fetch all users.  
