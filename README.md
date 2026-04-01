@@ -76,3 +76,25 @@ This project is a Library Management Application. It allows users to explore boo
 - **Architecture Document (I.4)**  
   - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.
 
+
+### Manjot Contribution
+
+- **T.2 Development SQL Database (P0)**
+  - I created a development SQL database to use for testing and development purposes.
+  - The database is connected to the Prisma schema, allowing the application to interact with it safely.
+
+- **I.1: Back-end Resource Endpoint (P1)**
+  - Implemented backend routes: `POST /login` for user login with validation, and `GET /users` to fetch all users.  
+  - Connected routes to controllers and services, using Prisma for database operations and middleware for input validation.
+
+- **I.2: Resource Database Schema (P1)**
+  - Defined a new User model in the Prisma schema with fields `id`, `name`, `email`, and `password`, ensuring the database follows normalization rules.  
+  - Created the `.env` file for database connection and ran Prisma migrations to generate the corresponding table in the database.
+
+- **I.3: Front-end Repository sends requests to back-end (P2)**
+  - Updated the front-end to send requests to the back-end instead of using temporary local data, allowing data to persist in the database.  
+  - Connected front-end components to back-end endpoints so that at least one set of data is now stored and retrieved from the solution database.
+
+- **I.4 Application State Persistence (P2)**
+  - Implemented login functionality with a SQL database via Prisma, ensuring user session data persists across sessions.  
+  - Verified that logging in and retrieving user information works correctly, with the front-end reflecting data stored in the database.
