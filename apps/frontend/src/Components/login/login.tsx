@@ -1,32 +1,65 @@
-import { useState } from "react";
-import { useLogin } from "../../hooks/useLogin"
+import { useState, useEffect } from "react";
 import "./login.css";
 
-/**
- * Login Component
- *
- * - Manages login UI for users
- * - Handles login and logout directly using the repository
- *
- * - Component directly uses the repository to fetch user data
- * - For this sprint, this component demonstrates direct repository use
- */
-
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedInUsers, setLoggedInUsers] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
 
-  const {loggedInUsers, message, handleLogin, handleLogout} = useLogin();
+  useEffect(() => {
+    const savedUsers = localStorage.getItem("loggedInUsers");
+    if (savedUsers) {
+      setLoggedInUsers(JSON.parse(savedUsers));
+    }
+  }, []);
+
+useEffect(() => {
+  if (loggedInUsers.length > 0) {
+    localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
+  }
+}, [loggedInUsers]);
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      setMessage("");
+
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage(data.error || "Invalid email or password");
+        return;
+      }
+
+      setLoggedInUsers((prev) => [...prev, data.user.email]);
+      setMessage(data.message || "Login successful");
+    } catch (error: any) {
+      setMessage("Something went wrong");
+    }
+  };
+
+  const handleLogout = (index: number) => {
+    setLoggedInUsers((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username.trim() === "" || password.trim() === "") return;
 
-    handleLogin(username, password);
+    if (email.trim() === "" || password.trim() === "") return;
 
-    setUsername("");
+    handleLogin(email, password);
+
+    setEmail("");
     setPassword("");
-  };  
+  };
 
   return (
     <div className="login">
@@ -34,10 +67,10 @@ const Login = () => {
 
       <form onSubmit={onSubmit}>
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

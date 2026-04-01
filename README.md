@@ -99,3 +99,79 @@ This project is a Library Management Application. It allows users to explore boo
 - **Application State Persistence (I.4)**
   - Verified that search history persists between sessions; added or removed search terms remain stored in the database.
   - Front-end and back-end are fully connected, ensuring updates are visible to the user across sessions.
+
+### Sprint-04 - Gaganpreet Kaur
+
+#### Overview
+- For this sprint, the project was refactored to include a full back-end application with Node.js, Express, and Prisma. The front-end now communicates properly with the back-end to persist data across sessions.
+
+**T.1: Back-end App Initialization (P0)**
+- The back-end was implemented using Node.js and Express, while both the front-end and back-end are TypeScript projects. A monorepo structure was maintained with npm workspaces to manage both applications efficiently.
+
+**I.1: Back-end Resource Endpoint (P1)**
+- Routes were created for managing books (GET, POST, DELETE). Controllers handle incoming requests, and services communicate with the Prisma client to interact with the database. All endpoints were tested using Postman and verified to work correctly with the front-end.
+
+**I.2: Resource Database Schema (P1)**
+- A Book model was added to the Prisma schema with fields for id, title, and author. The database conforms to Third Normal Form (3NF), and migrations were applied to the development database to ensure proper structure.
+
+**I.3: Front-end Repository Sends Requests to Back-end (P2)**
+- The front-end now fetches and updates data directly from the back-end, replacing temporary front-end storage. Adding or deleting books updates both the database and the front-end UI.
+
+**I.4: Application State Persistence (P2)**
+- Data persistence was verified such as books added or deleted remain in the database between sessions. Both Postman and the front-end UI confirm that the back-end and front-end are fully synchronized.
+
+## Backend & Frontend Integration (I.1 – I.4) - Parneet
+
+            ### I.1 Back-end Resource Endpoint
+
+            For the Library Tips feature, I created backend endpoints to handle requests from the frontend.  
+            Routes were set up to handle getting tips, adding new tips, and deleting tips.
+
+            Each request follows a proper structure:
+            - Routes → Controllers → Services → Prisma → Database
+
+            This ensures that all requests are validated, processed correctly, and connected to the database.
+
+            ---
+
+            ### I.2 Resource Database Schema
+
+            I added a new Prisma model called `LibraryTip` to store tips in the database.
+
+            The model includes:
+            - `id` (primary key)
+            - `title`
+            - `description`
+
+            The design follows proper database structure (Third Normal Form), where all fields depend on the primary key and there is no duplicate data.
+
+            ---
+
+            ### I.3 Front-end Repository sends requests to back-end
+
+            I replaced the frontend test data with real API calls to the backend.
+
+            The repository now:
+            - Fetches tips using GET requests
+            - Adds tips using POST requests
+            - Deletes tips using DELETE requests
+
+            This connects the frontend with the backend so that data is no longer temporary.
+
+            ---
+
+            ### I.4 Application State Persistence
+
+            The application now stores data in the backend database instead of temporary frontend memory.
+
+            For the Library Tips feature:
+            - Tips are saved in the database
+            - The frontend retrieves data from the backend on page load
+            - Changes (add/delete) are reflected immediately
+
+            Example:
+            - If a user adds a tip and refreshes the page, the tip is still there
+            - If a tip is deleted and the page is refreshed, it remains deleted
+
+            This shows that the application state persists across sessions.
+
