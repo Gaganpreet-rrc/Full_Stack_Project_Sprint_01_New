@@ -44,7 +44,6 @@ This project is a Library Management Application. It allows users to explore boo
 - Explains hooks, services, and repository structure.
 - Describes separation of presentation, business, and data concerns.
 
-
 ### Harmanpreet Contribution:
 - Services (T.2 & T.4)
   - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
@@ -76,6 +75,30 @@ This project is a Library Management Application. It allows users to explore boo
 
 - **Architecture Document (I.4)**  
   - Created docs/architecture-GK.md explaining the use of hooks, services, and repositories, and how each separates concerns.
+
+
+### Sprint - 4
+
+### Harman Contribution
+- **Prisma Installation and Client initialization (T.3)**
+  - Initialize Prisma client for back-end database access
+  - Installed Prisma and exported client for use in services/controllers
+
+- **Back-end Resource Endpoint (I.1)**
+  - Added API routes for search history (GET, POST with validation, DELETE)  and tested them in Postman to ensure they respond correctly to front-end requests.
+
+- **Resource Database Schema (I.2)**
+  - Created Prisma model `SearchFilter` with fields: id (Int, auto-increment) and term (String)
+  - Connected Prisma to development database using `.env` file.
+  - Created migration to add `SearchFilter` table to the database, following 3NF rules
+
+- **Front-end Repository sends requests to back-end (I.3)**
+  - Updated SearchFilter component to use back-end API for storing and fetching search history.
+  - Persisted search terms in the database with GET, POST, and DELETE endpoints, keeping data across sessions.
+
+- **Application State Persistence (I.4)**
+  - Verified that search history persists between sessions; added or removed search terms remain stored in the database.
+  - Front-end and back-end are fully connected, ensuring updates are visible to the user across sessions.
 
 ### Sprint-04 - Gaganpreet Kaur
 
