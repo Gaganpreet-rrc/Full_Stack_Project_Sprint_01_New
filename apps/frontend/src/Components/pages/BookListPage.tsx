@@ -10,17 +10,20 @@ export const BookListPage: React.FC = () => {
 
  
   return (
-    <div>
-    <h1>Available Books</h1>
-    <button onClick={toggleView}>
+<div>
+<h1>Available Books</h1>
+<button onClick={toggleView}>
 
-    {isGridView ? "Switch to List View" : "Switch to Grid View"}
-    </button>
-    
-      <BookList/>
-    </div>
+        {isGridView ? "Switch to List View" : "Switch to Grid View"}
+</button>
+ 
+      <BookList
+
+      />
+</div>
 
   );
 
 }
 
+ 

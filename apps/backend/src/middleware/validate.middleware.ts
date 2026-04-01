@@ -1,15 +1,19 @@
 import { Request, Response, NextFunction } from "express";
+import Joi from "joi";
 
-export const validate = (schema: any) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body);
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+});
 
-    if (error) {
-      return res.status(400).json({
-        error: error.details[0].message,
-      });
-    }
+export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = loginSchema.validate(req.body);
 
-    next();
-  };
+  if (error) {
+    return res.status(400).json({
+      error: error.details?.[0]?.message || "Validation error",
+    });
+  }
+
+  next();
 };
