@@ -1,21 +1,23 @@
-import { libraryTipsTestData, type Tip } from "../data/libraryTipsTestData";
-
-let tips: Tip[] = [...libraryTipsTestData];
-
 export const libraryTipsRepository = {
-  getAll(): Tip[] {
-    return tips;
+  async getAll() {
+    const res = await fetch("http://localhost:3000/api/library-tips");
+    return await res.json();
   },
 
-  add(tip: Tip): void {
-    tips.push(tip);
+  async add(tip: { title: string; description: string }) {
+    const res = await fetch("http://localhost:3000/api/library-tips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tip),
+    });
+    return await res.json();
   },
 
-  remove(id: number): void {
-    tips = tips.filter((t) => t.id !== id);
-  },
-
-  clear(): void {
-    tips = [];
+  async remove(id: number) {
+    await fetch(`http://localhost:3000/api/library-tips/${id}`, {
+      method: "DELETE",
+    });
   },
 };
