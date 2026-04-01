@@ -43,7 +43,8 @@ This project is a Library Management Application. It allows users to explore boo
 - Located at `docs/architecture-MK.md`.
 - Explains hooks, services, and repository structure.
 - Describes separation of presentation, business, and data concerns.
-=======
+
+
 ### Harmanpreet Contribution:
 - Services (T.2 & T.4)
   - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
@@ -95,3 +96,59 @@ This project is a Library Management Application. It allows users to explore boo
 
 **I.4: Application State Persistence (P2)**
 - Data persistence was verified such as books added or deleted remain in the database between sessions. Both Postman and the front-end UI confirm that the back-end and front-end are fully synchronized.
+
+## Backend & Frontend Integration (I.1 – I.4) - Parneet
+
+            ### I.1 Back-end Resource Endpoint
+
+            For the Library Tips feature, I created backend endpoints to handle requests from the frontend.  
+            Routes were set up to handle getting tips, adding new tips, and deleting tips.
+
+            Each request follows a proper structure:
+            - Routes → Controllers → Services → Prisma → Database
+
+            This ensures that all requests are validated, processed correctly, and connected to the database.
+
+            ---
+
+            ### I.2 Resource Database Schema
+
+            I added a new Prisma model called `LibraryTip` to store tips in the database.
+
+            The model includes:
+            - `id` (primary key)
+            - `title`
+            - `description`
+
+            The design follows proper database structure (Third Normal Form), where all fields depend on the primary key and there is no duplicate data.
+
+            ---
+
+            ### I.3 Front-end Repository sends requests to back-end
+
+            I replaced the frontend test data with real API calls to the backend.
+
+            The repository now:
+            - Fetches tips using GET requests
+            - Adds tips using POST requests
+            - Deletes tips using DELETE requests
+
+            This connects the frontend with the backend so that data is no longer temporary.
+
+            ---
+
+            ### I.4 Application State Persistence
+
+            The application now stores data in the backend database instead of temporary frontend memory.
+
+            For the Library Tips feature:
+            - Tips are saved in the database
+            - The frontend retrieves data from the backend on page load
+            - Changes (add/delete) are reflected immediately
+
+            Example:
+            - If a user adds a tip and refreshes the page, the tip is still there
+            - If a tip is deleted and the page is refreshed, it remains deleted
+
+            This shows that the application state persists across sessions.
+
