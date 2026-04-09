@@ -196,3 +196,9 @@ This project is a Library Management Application. It allows users to explore boo
 
             This shows that the application state persists across sessions.
 
+
+### Sprint - 5
+
+### T.1: Clerk Auth Setup (P0) - Harman
+- In the **frontend**, I used `<ClerkProvider>` to set up Clerk and added `<SignInButton>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` to manage user login and display appropriate buttons.
+- In the **backend**, I added `clerkMiddleware` and used `requireAuth()` to protect routes, so only signed-in users can create or delete data, while public routes remain open.

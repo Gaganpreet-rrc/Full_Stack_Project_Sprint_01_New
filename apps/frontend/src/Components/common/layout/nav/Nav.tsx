@@ -1,15 +1,20 @@
 import { NavLink } from "react-router-dom";
+import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/clerk-react";
 
 export function Nav() {
   return (
     <nav>
       <div className="page-links">
+
+        <SignedIn>
+          <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+            <UserButton />
+          </div>
+        </SignedIn>
+
+        {/* Nav Links */}
         <NavLink to="/" end>
           Home
-        </NavLink>
-
-        <NavLink to="/login">
-          Login
         </NavLink>
 
         <NavLink to="/searchfilter">
@@ -23,6 +28,13 @@ export function Nav() {
         <NavLink to="/library-tips">
           Library Tips
         </NavLink>
+
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button style={{ marginLeft: "10px" }}>Sign In</button>
+          </SignInButton>
+        </SignedOut>
+
       </div>
     </nav>
   );
