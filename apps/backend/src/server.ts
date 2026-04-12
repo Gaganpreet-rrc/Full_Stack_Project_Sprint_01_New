@@ -1,10 +1,11 @@
 import express from "express";
 import searchFilterRoutes from "./routes/searchFilterRoutes";
 import "dotenv/config";
-import { clerkMiddleware } from "@clerk/express"
-import cors from "cors"
-import dotenv from "dotenv"
-import morgan from "morgan"
+import { clerkMiddleware } from "@clerk/express";
+import cors from "cors";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import bookRoutes from "./routes/bookRoutes";
 
 dotenv.config()
 
@@ -27,7 +28,12 @@ app.get("/", (req, res) => {
 });
 
 app.use("/search-history", searchFilterRoutes);
+
+app.use("/books", bookRoutes);
+
 const PORT = 3000;
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
