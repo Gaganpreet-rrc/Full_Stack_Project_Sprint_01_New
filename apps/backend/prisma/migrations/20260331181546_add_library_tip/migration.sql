@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "SearchFilter" (
+CREATE TABLE IF NOT EXISTS "SearchFilter" (
     "id" SERIAL NOT NULL,
     "term" TEXT NOT NULL,
 
