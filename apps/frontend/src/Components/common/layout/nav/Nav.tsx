@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
 
 export function Nav() {
   return (
@@ -33,6 +33,10 @@ export function Nav() {
           <SignInButton mode="modal">
             <button style={{ marginLeft: "10px" }}>Sign In</button>
           </SignInButton>
+
+          <SignUpButton mode="modal">
+          <button style={{ marginLeft: "10px" }}>Sign Up</button>
+          </SignUpButton>
         </SignedOut>
 
       </div>
