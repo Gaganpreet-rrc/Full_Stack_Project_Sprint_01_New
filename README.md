@@ -148,21 +148,18 @@ This project is a Library Management Application. It allows users to explore boo
             For the Library Tips feature, I created backend endpoints to handle requests from the frontend.  
             Routes were set up to handle getting tips, adding new tips, and deleting tips.
 
-            Each request follows a proper structure:
-            - Routes → Controllers → Services → Prisma → Database
-
             This ensures that all requests are validated, processed correctly, and connected to the database.
 
             ---
 
             ### I.2 Resource Database Schema
 
-            I added a new Prisma model called `LibraryTip` to store tips in the database.
+            I added a new Prisma model called LibraryTip to store tips in the database.
 
             The model includes:
-            - `id` (primary key)
-            - `title`
-            - `description`
+            - id (primary key)
+            - title
+            - description
 
             The design follows proper database structure (Third Normal Form), where all fields depend on the primary key and there is no duplicate data.
 
