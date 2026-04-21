@@ -215,7 +215,7 @@ This project is a Library Management Application. It allows users to explore boo
 ## Create Clerk Account and Project
 1. Go to https://clerk.com and create an account.
 2. Create a new project from the Clerk dashboard.
-3. Navigate to Developers → API Keys.
+3. Navigate to Developers - API Keys.
 4. Copy your Publishable Key and Secret Key.
 
 ---
