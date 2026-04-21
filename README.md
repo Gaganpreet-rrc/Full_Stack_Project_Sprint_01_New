@@ -141,6 +141,23 @@ This project is a Library Management Application. It allows users to explore boo
 **I.4: Application State Persistence (P2)**
 - Data persistence was verified such as books added or deleted remain in the database between sessions. Both Postman and the front-end UI confirm that the back-end and front-end are fully synchronized.
 
+
+### Sprint-05 - Gaganpreet Kaur
+
+#### Overview
+- For this sprint, Clerk authentication was integrated into both the front-end and back-end, and user-specific data management was implemented. The application now supports secure login, session handling, and personalized data storage for each user.
+
+**T.2: Back-end User Management (P0)**
+- The database schema was updated to include a User model with a unique clerkId to connect Clerk authentication with application data. Relationships between User and Book were established using Prisma, allowing each user to store their own books. Since Clerk handles authentication, the password field was removed from the database to avoid storing sensitive data. Clerk middleware and getAuth() were used in the backend to verify users and securely access user-specific data.
+
+**I.1: Custom User-Associated Data and Session Management (P1)**
+- User-specific functionality was implemented where each logged-in user can only view, add, and delete their own books. Session data from Clerk is sent with each request, and the backend uses the logged-in user's clerkId to fetch and manage only their data. Guest users are restricted from accessing book-related features, ensuring secure and personalized interaction.
+
+**I.2: Project Retrospective (P2)**
+- Throughout the project, the team improved efficiency by adopting better Git practices such as feature-based branching and pull requests after Sprint 2. However, early challenges like improper branching, CORS issues, and Clerk authentication setup slowed progress. This experience highlighted the importance of early planning, structured workflows, and collaborative problem-solving, which will be applied in future projects.
+
+
+
 ## Backend & Frontend Integration (I.1 – I.4) - Parneet
 
             ### I.1 Back-end Resource Endpoint
@@ -255,3 +272,4 @@ npm run dev
 - 2. Open the app in your browser at:
 http://localhost:<your-frontend-port>
 ---
+
