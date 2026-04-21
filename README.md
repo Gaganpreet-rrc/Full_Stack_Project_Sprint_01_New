@@ -199,3 +199,59 @@ This project is a Library Management Application. It allows users to explore boo
 ### T.1: Clerk Auth Setup (P0) - Harman
 - In the **frontend**, I used `<ClerkProvider>` to set up Clerk and added `<SignInButton>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` to manage user login and display appropriate buttons.
 - In the **backend**, I added `clerkMiddleware` and used `requireAuth()` to protect routes, so only signed-in users can create or delete data, while public routes remain open.
+
+### T.4: Local Setup Instructions (P2) - Manjot
+
+## Local Setup
+
+---
+
+## Create Database
+1. Create an empty PostgreSQL database and copy its connection URL.
+- We can use SQL database, but update `apps/backend/prisma/schema.prisma` if needed.
+
+---
+
+## Create Clerk Account and Project
+1. Go to https://clerk.com and create an account.
+2. Create a new project from the Clerk dashboard.
+3. Navigate to Developers - API Keys.
+4. Copy your Publishable Key and Secret Key.
+
+---
+
+## Add Environment Variables
+
+### Frontend
+1. Create a file: `apps/frontend/.env`
+
+```env
+VITE_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+- Backend
+1. Create a file: apps/backend/.env
+2. Add the following:
+CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+CLERK_SECRET_KEY=<your-clerk-secret-key>
+---
+
+FRONTEND_URL=http://localhost:<your-frontend-port>
+PORT=3000
+DATABASE_URL=<your-database-url>
+
+## Run Database Migrations
+1. Navigate to the project root directory:
+cd <solution-root-directory>
+
+2. Run migrations:
+npm run migrate:backend
+
+3. Run the Application
+- 1. From the root directory:
+npm run dev
+
+- 2. Open the app in your browser at:
+http://localhost:<your-frontend-port>
+---
