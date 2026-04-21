@@ -1,10 +1,30 @@
 import { Request, Response } from "express";
 import * as bookService from "../services/bookService";
 import { getAuth } from "@clerk/express";
+import {prisma} from "../prismaClient";
 
 export const getAllBooks = async (req: Request, res: Response) => {
-  const books = await bookService.getBooks();
-  res.json(books);
+  try {
+    const { userId: clerkId } = getAuth(req);
+    if (!clerkId) {
+      return res.status(401).json({ message: "Please login" });
+    }
+    let user = await bookService.getUserByClerkId(clerkId);
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
+    }
+    const books = await bookService.getBooksByUser(user.id);
+    res.json(books);
+  } catch {
+    res.status(500).json({ message: "Error fetching books" });
+  }
 };
 
 export const addBook = async (req: Request, res: Response) => {
@@ -17,10 +37,16 @@ export const addBook = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await bookService.getUserByClerkId(clerkId);
+    let user = await bookService.getUserByClerkId(clerkId);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
     }
 
     const newBook = await bookService.createBook({
@@ -43,10 +69,16 @@ export const removeBook = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await bookService.getUserByClerkId(clerkId);
+    let user = await bookService.getUserByClerkId(clerkId);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
     }
 
     const id = Number(req.params.id);

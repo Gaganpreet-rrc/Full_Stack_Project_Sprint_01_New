@@ -32,3 +32,9 @@ export const deleteBookByUser = async (bookId: number, userId: number) => {
 
   return result.count > 0;
 };
+
+export const getBooksByUser = async (userId: number) => {
+  return prisma.book.findMany({
+    where: { userId }
+  });
+};
