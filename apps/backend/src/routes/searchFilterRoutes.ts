@@ -9,7 +9,7 @@ import { requireAuth } from "@clerk/express";
 const router = Router();
 
 router.get("/", getSearchHistory);
-router.post("/", requireAuth(), validateSearch, createSearch);
+router.post("/", validateSearch, createSearch);
 router.delete("/:id", requireAuth(), deleteSearch);
 
 export default router;

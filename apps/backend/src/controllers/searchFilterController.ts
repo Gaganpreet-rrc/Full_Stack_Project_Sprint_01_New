@@ -12,6 +12,7 @@ export const getSearchHistory = async (req: Request, res: Response) => {
 
 export const createSearch = async (req: Request, res: Response) => {
   try {
+    console.log("HIT CREATE API", req.body);
     const { term } = req.body;
     const newItem = await searchFilterService.create(term);
     res.status(201).json(newItem);
