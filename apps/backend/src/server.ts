@@ -6,6 +6,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import bookRoutes from "./routes/bookRoutes";
+import { clerkAuth, attachAuth } from "./middleware/auth";
 
 dotenv.config()
 
@@ -19,7 +20,15 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(
   clerkMiddleware({
@@ -27,6 +36,9 @@ app.use(
     secretKey: process.env.CLERK_SECRET_KEY!,
   })
 );
+
+app.use(clerkAuth);
+app.use(attachAuth);
 
 
 app.get("/", (req, res) => {
