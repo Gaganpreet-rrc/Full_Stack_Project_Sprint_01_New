@@ -8,6 +8,7 @@ import bookRoutes from "./routes/bookRoutes";
 import libraryTipsRoutes from "./routes/libraryTipsRoutes";
 
 import { clerkMiddleware } from "@clerk/express";
+import { clerkAuth, attachAuth } from "./middleware/auth";
 
 dotenv.config();
 
@@ -20,13 +21,26 @@ app.use(
     credentials: true,              
   })
 );
+
+app.use(morgan("combined"))
+
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(
   clerkMiddleware({
     debug: true,
   })
 );
+app.use(clerkAuth);
+app.use(attachAuth);
+
 
 app.get("/", (req, res) => {
   res.send("Backend is running!");
