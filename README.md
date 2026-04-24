@@ -200,9 +200,14 @@ This project is a Library Management Application. It allows users to explore boo
 - In the **frontend**, I used `<ClerkProvider>` to set up Clerk and added `<SignInButton>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` to manage user login and display appropriate buttons.
 - In the **backend**, I added `clerkMiddleware` and used `requireAuth()` to protect routes, so only signed-in users can create or delete data, while public routes remain open.
 
+###  I.1: Custom User-Associated Data and Session Management (P1)
+- This project implements user-specific search history using Clerk authentication and Prisma.  
+- Logged-in users can save and view their personal search history, while guest users can still search without saving data.
+
 ### I.2: Project Retrospective (P2)
 - During this project, our team became more efficient after applying feedback from earlier sprints and improving our workflow. We started organizing the Kanban board properly, using separate branches for each feature, and writing clear pull request descriptions, which helped us manage tasks and collaborate better. In the early stages, we faced issues like merge conflicts, problems when switching branches.
 - The project highlights the importance of proper planning, following a structured Git workflow, and learning tools early in the development process. For future projects, we will continue using these best practices, improve team communication, and focus on testing and debugging early to work more efficiently.
+
 
 ### T.4: Local Setup Instructions (P2) - Manjot
 
