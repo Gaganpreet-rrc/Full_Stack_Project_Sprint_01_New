@@ -1,81 +1,79 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 import "./login.css";
 
 const Login = () => {
+  const { user, isSignedIn } = useUser();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUsers, setLoggedInUsers] = useState<string[]>([]);
   const [message, setMessage] = useState("");
+  const [loggedInUsers, setLoggedInUsers] = useState<string[]>([]);
 
   useEffect(() => {
-    const savedUsers = localStorage.getItem("loggedInUsers");
-    if (savedUsers) {
-      setLoggedInUsers(JSON.parse(savedUsers));
+    if (!isSignedIn || !user) {
+      setLoggedInUsers([]); 
+      return;
     }
-  }, []);
 
-useEffect(() => {
-  if (loggedInUsers.length > 0) {
-    localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
-  }
-}, [loggedInUsers]);
+    const key = `loggedInUsers-${user.id}`;
+    const saved = localStorage.getItem(key);
 
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      setMessage("");
+    if (saved) {
+      setLoggedInUsers(JSON.parse(saved));
+    } else {
+      setLoggedInUsers([]);
+    }
+  }, [isSignedIn, user]);
 
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-      const data = await response.json();
+    if (!isSignedIn || !user) {
+      setMessage("Please sign in with Clerk");
+      return;
+    }
 
-      if (!response.ok) {
-        setMessage(data.error || "Invalid email or password");
-        return;
-      }
+    if (email && password) {
+      const updatedUsers = [...loggedInUsers, email];
 
-      setLoggedInUsers((prev) => [...prev, data.user.email]);
-      setMessage(data.message || "Login successful");
-    } catch (error: any) {
-      setMessage("Something went wrong");
+      setMessage("Login successful");
+      setLoggedInUsers(updatedUsers);
+
+      const key = `loggedInUsers-${user.id}`;
+      localStorage.setItem(key, JSON.stringify(updatedUsers));
+    } else {
+      setMessage("Please fill all fields");
     }
   };
 
   const handleLogout = (index: number) => {
-    setLoggedInUsers((prev) => prev.filter((_, i) => i !== index));
-  };
+    if (!user) return;
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    const updated = loggedInUsers.filter((_, i) => i !== index);
+    setLoggedInUsers(updated);
 
-    if (email.trim() === "" || password.trim() === "") return;
-
-    handleLogin(email, password);
-
-    setEmail("");
-    setPassword("");
+    const key = `loggedInUsers-${user.id}`;
+    localStorage.setItem(key, JSON.stringify(updated));
   };
 
   return (
     <div className="login">
       <h2>Login</h2>
 
-      <form onSubmit={onSubmit}>
+      {!isSignedIn && <p>Please sign in with Clerk</p>}
+
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -85,15 +83,19 @@ useEffect(() => {
 
       {message && <p>{message}</p>}
 
-      <h3>Logged In Users</h3>
-      <ul>
-        {loggedInUsers.map((user, index) => (
-          <li key={index}>
-            {user}{" "}
-            <button onClick={() => handleLogout(index)}>Logout</button>
-          </li>
-        ))}
-      </ul>
+      {isSignedIn && (
+        <>
+          <h3>Logged In Users</h3>
+          <ul>
+            {loggedInUsers.map((user, index) => (
+              <li key={index}>
+                {user}
+                <button onClick={() => handleLogout(index)}>Logout</button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

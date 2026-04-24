@@ -18,9 +18,12 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: any, res: Response) => {
   try {
-    const users = await authService.getUsers();
+    const userId = req.userId; 
+
+    const users = await authService.getUsersByClerkId(userId);
+
     res.status(200).json(users);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
