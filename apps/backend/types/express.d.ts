@@ -1,3 +1,4 @@
+import "express";
 import { AuthObject } from "@clerk/express";
 
 declare global {

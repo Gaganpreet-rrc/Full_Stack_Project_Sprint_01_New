@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import type { SearchFilter as SearchFilterType } from "../../types/SearchFilter";
 import { searchService } from "../../services/searchfilterService";
 
@@ -14,15 +14,29 @@ export default function SearchFilter({
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const navigate = useNavigate();
+
   const { getToken } = useAuth();
+  const { isSignedIn } = useUser();
 
   const [history, setHistory] = useState<SearchFilterType[]>([]);
   const [inputValue, setInputValue] = useState(search);
 
-  // GET history
+  // GET history 
   const fetchHistory = async () => {
     try {
-      const res = await fetch(API_URL);
+      if (!isSignedIn) {
+        setHistory([]);
+        return;
+      }
+
+      const token = await getToken();
+
+      const res = await fetch(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const data = await res.json();
       setHistory(data);
     } catch (error) {
@@ -32,9 +46,9 @@ export default function SearchFilter({
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [isSignedIn]);
 
-  // CREATE search 
+  // SEARCH (create)
   const handleSearch = async () => {
     const result = searchService.validateSearch(inputValue);
 
@@ -43,6 +57,15 @@ export default function SearchFilter({
       return;
     }
 
+    // Guest user 
+    if (!isSignedIn) {
+      setSearch(inputValue);
+      setInputValue("");
+      navigate("/booklist");
+      return;
+    }
+
+    // Logged-in user 
     try {
       const token = await getToken();
 
@@ -50,7 +73,7 @@ export default function SearchFilter({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ term: inputValue }),
       });
@@ -65,15 +88,17 @@ export default function SearchFilter({
     navigate("/booklist");
   };
 
-  // DELETE 
+  // DELETE history
   const handleRemove = async (id: number) => {
+    if (!isSignedIn) return;
+
     try {
       const token = await getToken();
 
       await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -105,7 +130,7 @@ export default function SearchFilter({
       </form>
 
       <div className="history-container">
-        {history.length > 0 && (
+        {isSignedIn && history.length > 0 && (
           <ul className="history-list">
             {history.map((item) => (
               <li key={item.id} className="history-item">
