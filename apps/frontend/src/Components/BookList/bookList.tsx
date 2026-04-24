@@ -1,64 +1,73 @@
-/**
- * BookList Component (I.3)
- *
- * Shows the Hook-Service-Repository pattern:
- * - Uses useLibraryContext hook for shared book state such as (add/remove books, toggle view).
- * - Uses searchService to validate new book input.
- * - Updates data via the repository indirectly through the hook.
- *
- * This keeps state shared between pages and avoids prop drilling.
- */
-
 import { useState, useEffect } from "react";
 import "./bookList.css";
 import { searchService } from "../../services/searchfilterService";
 import { Book } from "./../../types/Book";
+import { useUser } from "@clerk/clerk-react";
+import { useLibraryContext } from "../../context/LibraryContext";
 
 export const BookList = () => {
+  const { isSignedIn } = useUser();
+  const { isGridView } = useLibraryContext();
+
   const [books, setBooks] = useState<Book[]>([]);
   const [newBook, setNewBook] = useState("");
-  const [isGridView, setIsGridView] = useState(false);
-
-  const toggleView = () => setIsGridView(!isGridView);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/books")
-      .then(res => res.json())
-      .then(data => setBooks(data))
-      .catch(err => console.error(err));
-  }, []);
-
-
-  const handleAdd = async () => {
-    const validation = searchService.validateSearch(newBook);
-    if (!validation.valid) {
-      alert(validation.message);
+    if (!isSignedIn) {
+      setBooks([]);
       return;
     }
 
-    const res = await fetch("http://localhost:3000/api/books", {
+    fetch("http://localhost:3000/books", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setBooks(data);
+        } else {
+          setBooks([]);
+        }
+      })
+      .catch(() => setBooks([]));
+  }, [isSignedIn]);
+
+  if (!isSignedIn) {
+    return <h2>Please login to view your books</h2>;
+  }
+
+  const handleAdd = async () => {
+    const validation = searchService.validateSearch(newBook);
+    if (!validation.valid) return alert(validation.message);
+
+    const res = await fetch("http://localhost:3000/books", {
       method: "POST",
+      credentials: "include",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title: newBook,
-        author: "Unknown"
-      })
+        author: "Unknown",
+      }),
     });
 
     const data = await res.json();
-    setBooks([...books, data]);
+
+    if (data?.id) {
+      setBooks([...books, data]);
+    }
+
     setNewBook("");
   };
 
-
   const handleRemove = async (id: number) => {
-    await fetch(`http://localhost:3000/api/books/${id}`, {
-      method: "DELETE"
+    await fetch(`http://localhost:3000/books/${id}`, {
+      method: "DELETE",
+      credentials: "include",
     });
 
-    setBooks(books.filter(book => book.id !== id));
+    setBooks(books.filter((book) => book.id !== id));
   };
 
   return (
@@ -74,10 +83,6 @@ export const BookList = () => {
         />
         <button onClick={handleAdd}>Add</button>
       </div>
-
-      <button onClick={toggleView}>
-        {isGridView ? "Switch to List View" : "Switch to Grid View"}
-      </button>
 
       <div className={isGridView ? "grid-view books" : "list-view books"}>
         {books.map((book) => (
