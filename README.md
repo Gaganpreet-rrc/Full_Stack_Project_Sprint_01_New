@@ -200,6 +200,10 @@ This project is a Library Management Application. It allows users to explore boo
 - In the **frontend**, I used `<ClerkProvider>` to set up Clerk and added `<SignInButton>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` to manage user login and display appropriate buttons.
 - In the **backend**, I added `clerkMiddleware` and used `requireAuth()` to protect routes, so only signed-in users can create or delete data, while public routes remain open.
 
+###  I.1: Custom User-Associated Data and Session Management (P1)
+- This project implements user-specific search history using Clerk authentication and Prisma.  
+- Logged-in users can save and view their personal search history, while guest users can still search without saving data.
+
 ### T.4: Local Setup Instructions (P2) - Manjot
 
 ## Local Setup
