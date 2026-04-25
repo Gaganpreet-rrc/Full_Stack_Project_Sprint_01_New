@@ -44,7 +44,7 @@ This project is a Library Management Application. It allows users to explore boo
 - Explains hooks, services, and repository structure.
 - Describes separation of presentation, business, and data concerns.
 
-### Harmanpreet Contribution:
+## Harmanpreet Contribution:
 - Services (T.2 & T.4)
   - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
   - The service is accessed through the useSearchFilter hook, maintaining proper separation between UI and business logic.
@@ -221,6 +221,12 @@ This project is a Library Management Application. It allows users to explore boo
 - This project implements user-specific search history using Clerk authentication and Prisma.  
 - Logged-in users can save and view their personal search history, while guest users can still search without saving data.
 
+### I.2: Project Retrospective (P2)
+- During this project, our team became more efficient after applying feedback from earlier sprints and improving our workflow. We started organizing the Kanban board properly, using separate branches for each feature, and writing clear pull request descriptions, which helped us manage tasks and collaborate better. In the early stages, we faced issues like merge conflicts, problems when switching branches.
+- The project highlights the importance of proper planning, following a structured Git workflow, and learning tools early in the development process. For future projects, we will continue using these best practices, improve team communication, and focus on testing and debugging early to work more efficiently.
+
+
+### T.4: Local Setup Instructions (P2) - Manjot
 
 ## Local Setup
 
