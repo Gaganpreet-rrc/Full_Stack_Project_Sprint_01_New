@@ -1,6 +1,6 @@
 import { prisma } from "../prismaClient";
 
-export const login = async (email: string, password: string) => {
+export const login = async (email: string) => {
   const user = await prisma.user.findUnique({
     where: { email },
   });
@@ -9,18 +9,17 @@ export const login = async (email: string, password: string) => {
     throw new Error("User not found");
   }
 
-  if (user.password !== password) {
-    throw new Error("Invalid password");
-  }
-
   return {
     id: user.id,
     email: user.email,
   };
 };
 
-export const getUsers = async () => {
+export const getUsersByClerkId = async (clerkId: string) => {
   return await prisma.user.findMany({
+    where: {
+      clerkId: clerkId,
+    },
     select: {
       id: true,
       email: true,
