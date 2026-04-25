@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import type { SearchFilter as SearchFilterType } from "../../types/SearchFilter";
 import { searchService } from "../../services/searchfilterService";
+
+const API_URL = "http://localhost:3000/search-history";
 
 export default function SearchFilter({
   search,
@@ -11,65 +14,94 @@ export default function SearchFilter({
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const navigate = useNavigate();
+
+  const { getToken } = useAuth();
+  const { isSignedIn } = useUser();
+
   const [history, setHistory] = useState<SearchFilterType[]>([]);
   const [inputValue, setInputValue] = useState(search);
-  const [loading, setLoading] = useState(false);
 
+  // GET history 
   const fetchHistory = async () => {
     try {
-      setLoading(true);
-      const response = await fetch("http://localhost:3000/search-history");
-      if (!response.ok) throw new Error("Failed to fetch");
-      const data = await response.json();
-      setHistory(Array.isArray(data) ? data : []);
+      if (!isSignedIn) {
+        setHistory([]);
+        return;
+      }
+
+      const token = await getToken();
+
+      const res = await fetch(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setHistory(data);
     } catch (error) {
-      console.error("Fetch error:", error);
-      setHistory([]);
-    } finally {
-      setLoading(false);
+      console.error("Failed to fetch history:", error);
     }
   };
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [isSignedIn]);
 
+  // SEARCH (create)
   const handleSearch = async () => {
-    if (!inputValue.trim()) {
-      alert("Enter a search term");
-      return;
-    }
-
     const result = searchService.validateSearch(inputValue);
+
     if (!result.valid) {
       alert(result.message);
       return;
     }
 
+    // Guest user 
+    if (!isSignedIn) {
+      setSearch(inputValue);
+      setInputValue("");
+      navigate("/booklist");
+      return;
+    }
+
+    // Logged-in user 
     try {
-      const response = await fetch("http://localhost:3000/search-history", {
+      const token = await getToken();
+
+      await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ term: inputValue }),
       });
 
-      if (!response.ok) throw new Error("Save failed");
-
       await fetchHistory();
-      setSearch(inputValue);
-      navigate("/booklist");
     } catch (error) {
       console.error("Save error:", error);
     }
+
+    setSearch(inputValue);
+    setInputValue("");
+    navigate("/booklist");
   };
 
+  // DELETE history
   const handleRemove = async (id: number) => {
+    if (!isSignedIn) return;
+
     try {
-      const response = await fetch(
-        `http://localhost:3000/search-history/${id}`,
-        { method: "DELETE" }
-      );
-      if (!response.ok) throw new Error("Delete failed");
+      const token = await getToken();
+
+      await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       await fetchHistory();
     } catch (error) {
       console.error("Delete error:", error);
@@ -78,7 +110,12 @@ export default function SearchFilter({
 
   return (
     <div className="search-filter">
-      <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+      >
         <input
           type="text"
           placeholder="Search Book..."
@@ -86,30 +123,29 @@ export default function SearchFilter({
           onChange={(e) => setInputValue(e.target.value)}
           className="filter-input"
         />
-        <button onClick={handleSearch} className="search-btn">
+
+        <button type="submit" className="search-btn">
           Search
         </button>
+      </form>
+
+      <div className="history-container">
+        {isSignedIn && history.length > 0 && (
+          <ul className="history-list">
+            {history.map((item) => (
+              <li key={item.id} className="history-item">
+                {item.term}
+                <button
+                  onClick={() => handleRemove(item.id)}
+                  className="remove-btn"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-
-      {loading && <p>Loading...</p>}
-
-      {!loading && history.length === 0 && <p>No search history found</p>}
-
-      {history.length > 0 && (
-        <ul className="history-list">
-          {history.map((item) => (
-            <li key={item.id}>
-              {item.term}
-              <button
-                onClick={() => handleRemove(item.id)}
-                className="remove-btn"
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }

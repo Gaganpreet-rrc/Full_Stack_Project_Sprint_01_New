@@ -1,5 +1,9 @@
 import express from "express";
-import { getLibraryTips, createLibraryTip, deleteLibraryTip } from "../controllers/libraryTipsController";
+import {
+  getLibraryTips,
+  createLibraryTip,
+  deleteLibraryTip
+} from "../controllers/libraryTipsController";
 import { validateLibraryTip } from "../middleware/validateLibraryTip";
 
 const router = express.Router();

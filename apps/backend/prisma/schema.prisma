@@ -9,15 +9,20 @@ datasource db {
 
 model User {
   id       Int    @id @default(autoincrement())
+  clerkId  String @unique
   name     String
   email    String @unique
-  password String
   books    Book[]
+  
+  searches SearchFilter[]
 }
 
 model SearchFilter {
   id   Int    @id @default(autoincrement())
   term String
+  
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 }
 
 model Book {

@@ -44,7 +44,7 @@ This project is a Library Management Application. It allows users to explore boo
 - Explains hooks, services, and repository structure.
 - Describes separation of presentation, business, and data concerns.
 
-### Harmanpreet Contribution:
+## Harmanpreet Contribution:
 - Services (T.2 & T.4)
   - Defined `searchService` to handle search validation and filtering logic, ensuring business rules are consistent and reusable. Used this service in `SearchFilter`, `BookList`, and `BookListPage` components.
   - The service is accessed through the useSearchFilter hook, maintaining proper separation between UI and business logic.
@@ -141,6 +141,23 @@ This project is a Library Management Application. It allows users to explore boo
 **I.4: Application State Persistence (P2)**
 - Data persistence was verified such as books added or deleted remain in the database between sessions. Both Postman and the front-end UI confirm that the back-end and front-end are fully synchronized.
 
+
+### Sprint-05 - Gaganpreet Kaur
+
+#### Overview
+- For this sprint, Clerk authentication was integrated into both the front-end and back-end, and user-specific data management was implemented. The application now supports secure login, session handling, and personalized data storage for each user.
+
+**T.2: Back-end User Management (P0)**
+- The database schema was updated to include a User model with a unique clerkId to connect Clerk authentication with application data. Relationships between User and Book were established using Prisma, allowing each user to store their own books. Since Clerk handles authentication, the password field was removed from the database to avoid storing sensitive data. Clerk middleware and getAuth() were used in the backend to verify users and securely access user-specific data.
+
+**I.1: Custom User-Associated Data and Session Management (P1)**
+- User-specific functionality was implemented where each logged-in user can only view, add, and delete their own books. Session data from Clerk is sent with each request, and the backend uses the logged-in user's clerkId to fetch and manage only their data. Guest users are restricted from accessing book-related features, ensuring secure and personalized interaction.
+
+**I.2: Project Retrospective (P2)**
+- Throughout the project, the team improved efficiency by adopting better Git practices such as feature-based branching and pull requests after Sprint 2. However, early challenges like improper branching, CORS issues, and Clerk authentication setup slowed progress. This experience highlighted the importance of early planning, structured workflows, and collaborative problem-solving, which will be applied in future projects.
+
+
+
 ## Backend & Frontend Integration (I.1 – I.4) - Parneet
 
             ### I.1 Back-end Resource Endpoint
@@ -148,21 +165,18 @@ This project is a Library Management Application. It allows users to explore boo
             For the Library Tips feature, I created backend endpoints to handle requests from the frontend.  
             Routes were set up to handle getting tips, adding new tips, and deleting tips.
 
-            Each request follows a proper structure:
-            - Routes → Controllers → Services → Prisma → Database
-
             This ensures that all requests are validated, processed correctly, and connected to the database.
 
             ---
 
             ### I.2 Resource Database Schema
 
-            I added a new Prisma model called `LibraryTip` to store tips in the database.
+            I added a new Prisma model called LibraryTip to store tips in the database.
 
             The model includes:
-            - `id` (primary key)
-            - `title`
-            - `description`
+            - id (primary key)
+            - title
+            - description
 
             The design follows proper database structure (Third Normal Form), where all fields depend on the primary key and there is no duplicate data.
 
@@ -202,3 +216,101 @@ This project is a Library Management Application. It allows users to explore boo
 ### T.1: Clerk Auth Setup (P0) - Harman
 - In the **frontend**, I used `<ClerkProvider>` to set up Clerk and added `<SignInButton>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` to manage user login and display appropriate buttons.
 - In the **backend**, I added `clerkMiddleware` and used `requireAuth()` to protect routes, so only signed-in users can create or delete data, while public routes remain open.
+
+###  I.1: Custom User-Associated Data and Session Management (P1)
+- This project implements user-specific search history using Clerk authentication and Prisma.  
+- Logged-in users can save and view their personal search history, while guest users can still search without saving data.
+
+### I.2: Project Retrospective (P2)
+- During this project, our team became more efficient after applying feedback from earlier sprints and improving our workflow. We started organizing the Kanban board properly, using separate branches for each feature, and writing clear pull request descriptions, which helped us manage tasks and collaborate better. In the early stages, we faced issues like merge conflicts, problems when switching branches.
+- The project highlights the importance of proper planning, following a structured Git workflow, and learning tools early in the development process. For future projects, we will continue using these best practices, improve team communication, and focus on testing and debugging early to work more efficiently.
+
+
+### T.4: Local Setup Instructions (P2) - Manjot
+
+## Local Setup
+
+---
+
+## Create Database
+1. Create an empty PostgreSQL database and copy its connection URL.
+- We can use SQL database, but update `apps/backend/prisma/schema.prisma` if needed.
+
+---
+
+## Create Clerk Account and Project
+1. Go to https://clerk.com and create an account.
+2. Create a new project from the Clerk dashboard.
+3. Navigate to Developers - API Keys.
+4. Copy your Publishable Key and Secret Key.
+
+---
+
+## Add Environment Variables
+
+### Frontend
+1. Create a file: `apps/frontend/.env`
+
+```env
+VITE_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+- Backend
+1. Create a file: apps/backend/.env
+2. Add the following:
+CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+CLERK_SECRET_KEY=<your-clerk-secret-key>
+---
+
+FRONTEND_URL=http://localhost:<your-frontend-port>
+PORT=3000
+DATABASE_URL=<your-database-url>
+
+## Run Database Migrations
+1. Navigate to the project root directory:
+cd <solution-root-directory>
+
+2. Run migrations:
+npm run migrate:backend
+
+3. Run the Application
+- 1. From the root directory:
+npm run dev
+
+- 2. Open the app in your browser at:
+http://localhost:<your-frontend-port>
+---
+
+### T.4: Local Setup Instructions (P2)
+- Added a Local Setup section in `README.md` with environment variables for frontend and backend (Clerk keys, database URL, API URL).
+- Included steps for installing dependencies, setting up the database, running Prisma migrations, and starting the application locally.
+
+### I.1: Custom User-Associated Data and Session Management (P1)
+- Implemented Clerk-based authentication where the frontend sends the user’s session token to the backend, and the backend verifies it to access the logged-in user’s ID.
+- Used the user ID to return and display user-specific data, ensuring only logged-in users can view their own information with persistent login history support.
+
+### I.2: Project Retrospective (P2)
+- Improved team efficiency by using feature-based branching, pull requests, Kanban board, and better communication, which helped organize tasks and speed up development.
+- Learned from challenges like merge conflicts, CORS issues, and Clerk authentication setup, which improved understanding of Git workflow, debugging, and full-stack integration.
+  
+
+# Sprint 5 – Parneet Kaur
+
+## Overview
+In this sprint, I completed both Part 1 and Part 2 of the project. I worked on implementing authentication
+and improving the application, and also completed a project retrospective based on my team’s experience.
+
+## Part 1 (Individual Work)
+For Part 1, I implemented Clerk authentication and connected it with both the frontend and backend. 
+I protected API routes and ensured that only logged-in users can add and delete library tips. I also handled
+ user-specific data and resolved issues related to authentication and API integration.
+
+## Part 2 (Project Retrospective)
+For Part 2, I created a project retrospective where I analyzed when the team worked most effectively and 
+when we faced challenges, especially during integration and debugging. I also reflected on what I learned 
+from this project, such as improving debugging, using Git properly, and working step by step to avoid errors.
+
+## Learning
+In this sprint, I learned how authentication works in a full-stack application, improved my debugging 
+skills, and gained a better understanding of API integration and teamwork.

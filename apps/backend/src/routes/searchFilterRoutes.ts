@@ -5,11 +5,11 @@ import {
   deleteSearch,
 } from "../controllers/searchFilterController";
 import { validateSearch } from "../middleware/searchFilterValidation";
-import { requireAuth } from "@clerk/express"; 
+
 const router = Router();
 
 router.get("/", getSearchHistory);
-router.post("/", requireAuth(), validateSearch, createSearch);
-router.delete("/:id", requireAuth(), deleteSearch);
+router.post("/", validateSearch, createSearch);
+router.delete("/:id", deleteSearch);
 
 export default router;

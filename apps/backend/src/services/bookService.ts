@@ -15,3 +15,26 @@ export const deleteBook = async (id: number) => {
     where: { id },
   });
 };
+
+export const getUserByClerkId = async (clerkId: string) => {
+  return await prisma.user.findUnique({
+    where: { clerkId }
+  });
+};
+
+export const deleteBookByUser = async (bookId: number, userId: number) => {
+  const result = await prisma.book.deleteMany({
+    where: {
+      id: bookId,
+      userId: userId
+    }
+  });
+
+  return result.count > 0;
+};
+
+export const getBooksByUser = async (userId: number) => {
+  return prisma.book.findMany({
+    where: { userId }
+  });
+};

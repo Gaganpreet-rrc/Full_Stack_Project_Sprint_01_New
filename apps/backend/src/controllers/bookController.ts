@@ -1,21 +1,96 @@
 import { Request, Response } from "express";
 import * as bookService from "../services/bookService";
+import { getAuth } from "@clerk/express";
+import {prisma} from "../prismaClient";
 
 export const getAllBooks = async (req: Request, res: Response) => {
-  const books = await bookService.getBooks();
-  res.json(books);
+  try {
+    const { userId: clerkId } = getAuth(req);
+    if (!clerkId) {
+      return res.status(401).json({ message: "Please login" });
+    }
+    let user = await bookService.getUserByClerkId(clerkId);
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
+    }
+    const books = await bookService.getBooksByUser(user.id);
+    res.json(books);
+  } catch {
+    res.status(500).json({ message: "Error fetching books" });
+  }
 };
 
 export const addBook = async (req: Request, res: Response) => {
-  const { title, author, userId } = req.body;
+  try {
+    const { title, author } = req.body;
 
-  const newBook = await bookService.createBook({ title, author, userId });
-  res.status(201).json(newBook);
+    const { userId: clerkId } = getAuth(req);
+
+    if (!clerkId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    let user = await bookService.getUserByClerkId(clerkId);
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
+    }
+
+    const newBook = await bookService.createBook({
+      title,
+      author,
+      userId: user.id
+    });
+
+    res.status(201).json(newBook);
+  } catch (error) {
+    res.status(500).json({ message: "Error adding book" });
+  }
 };
 
 export const removeBook = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+  try {
+    const { userId: clerkId } = getAuth(req);
 
-  await bookService.deleteBook(id);
-  res.json({ message: "Book deleted" });
+    if (!clerkId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    let user = await bookService.getUserByClerkId(clerkId);
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email: "temp@email.com",
+          name: "New User"
+        }
+      });
+    }
+
+    const id = Number(req.params.id);
+
+    const deleted = await bookService.deleteBookByUser(id, user.id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Book not found or not yours" });
+    }
+
+    res.json({ message: "Book deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting book" });
+  }
 };
