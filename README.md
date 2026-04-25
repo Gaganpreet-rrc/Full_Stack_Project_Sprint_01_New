@@ -282,6 +282,26 @@ npm run dev
 http://localhost:<your-frontend-port>
 ---
 
+# Sprint 5 – Parneet Kaur
+
+## Overview
+In this sprint, I completed both Part 1 and Part 2 of the project. I worked on implementing authentication
+and improving the application, and also completed a project retrospective based on my team’s experience.
+
+## Part 1 (Individual Work)
+For Part 1, I implemented Clerk authentication and connected it with both the frontend and backend. 
+I protected API routes and ensured that only logged-in users can add and delete library tips. I also handled
+ user-specific data and resolved issues related to authentication and API integration.
+
+## Part 2 (Project Retrospective)
+For Part 2, I created a project retrospective where I analyzed when the team worked most effectively and 
+when we faced challenges, especially during integration and debugging. I also reflected on what I learned 
+from this project, such as improving debugging, using Git properly, and working step by step to avoid errors.
+
+## Learning
+In this sprint, I learned how authentication works in a full-stack application, improved my debugging 
+skills, and gained a better understanding of API integration and teamwork.
+
 ### T.4: Local Setup Instructions (P2)
 - Added a Local Setup section in `README.md` with environment variables for frontend and backend (Clerk keys, database URL, API URL).
 - Included steps for installing dependencies, setting up the database, running Prisma migrations, and starting the application locally.
@@ -293,3 +313,4 @@ http://localhost:<your-frontend-port>
 ### I.2: Project Retrospective (P2)
 - Improved team efficiency by using feature-based branching, pull requests, Kanban board, and better communication, which helped organize tasks and speed up development.
 - Learned from challenges like merge conflicts, CORS issues, and Clerk authentication setup, which improved understanding of Git workflow, debugging, and full-stack integration.
+
