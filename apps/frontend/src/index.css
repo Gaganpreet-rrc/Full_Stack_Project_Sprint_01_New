@@ -122,3 +122,38 @@ button:focus-visible {
 .remove-btn:hover {
   background-color: #b91c1c;
 }
+
+/* FIX TEXT VISIBILITY */
+.library-tips-section {
+  color: #222;
+}
+
+.library-tips-title {
+  color: #111;
+}
+
+.library-tips-form input {
+  color: #111;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+
+.library-tips-form input::placeholder {
+  color: #666;
+}
+
+
+.library-tips-list {
+  color: #111;
+}
+
+
+.library-tips-error {
+  color: red;
+}
+
+
+.library-tips-section p {
+  color: #222;
+}
