@@ -204,7 +204,6 @@ This project is a Library Management Application. It allows users to explore boo
 - This project implements user-specific search history using Clerk authentication and Prisma.  
 - Logged-in users can save and view their personal search history, while guest users can still search without saving data.
 
-### T.4: Local Setup Instructions (P2) - Manjot
 
 ## Local Setup
 
@@ -259,3 +258,15 @@ npm run dev
 - 2. Open the app in your browser at:
 http://localhost:<your-frontend-port>
 ---
+
+### T.4: Local Setup Instructions (P2)
+- Added a Local Setup section in `README.md` with environment variables for frontend and backend (Clerk keys, database URL, API URL).
+- Included steps for installing dependencies, setting up the database, running Prisma migrations, and starting the application locally.
+
+### I.1: Custom User-Associated Data and Session Management (P1)
+- Implemented Clerk-based authentication where the frontend sends the user’s session token to the backend, and the backend verifies it to access the logged-in user’s ID.
+- Used the user ID to return and display user-specific data, ensuring only logged-in users can view their own information with persistent login history support.
+
+### I.2: Project Retrospective (P2)
+- Improved team efficiency by using feature-based branching, pull requests, Kanban board, and better communication, which helped organize tasks and speed up development.
+- Learned from challenges like merge conflicts, CORS issues, and Clerk authentication setup, which improved understanding of Git workflow, debugging, and full-stack integration.
